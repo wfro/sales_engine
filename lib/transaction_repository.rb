@@ -14,13 +14,14 @@ class TransactionRepository
     @transactions = transactions
   end
     
-  # def all
-  # end
-  #
-  # def random
-  #   # returns a random instance
-  # end
-  #
+  def all
+    transactions
+  end
+  
+  def random
+    transactions.sample
+  end
+  
   # def find_by_X(match)
   #   # where X is some attribute, returns a single instance whose X attribute case-insensitive attribute matches the match parameter. For instance, Customer.find_by_first_name("Mary") could find a Customer with the first name attribute "Mary" or "mary" but not "Mary Ellen".
   # end
