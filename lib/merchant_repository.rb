@@ -1,3 +1,6 @@
+require 'csv'
+require_relative 'merchant'
+
 class MerchantRepository
   def self.load(filename="./data/merchants.csv")
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
