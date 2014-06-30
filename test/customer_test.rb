@@ -1,8 +1,4 @@
-gem 'minitest', '~>5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
-
-require './lib/customer'
+require './test/test_helper'
 
 class CustomerTest < Minitest::Test
   def entry
@@ -17,7 +13,7 @@ class CustomerTest < Minitest::Test
 
   def test_customer_attributes
     customer = Customer.new(entry)
-    
+
     assert_equal 1, customer.id
     assert_equal "Robb", customer.first_name
     assert_equal "Stark", customer.last_name
