@@ -11,9 +11,10 @@ class ItemRepository
     @items = items
   end
 
-  # def all
-  # end
-  #
+  def all
+    @items
+  end
+
   # def random
   #   # returns a random instance
   # end

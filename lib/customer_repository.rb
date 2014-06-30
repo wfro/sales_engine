@@ -10,9 +10,11 @@ class CustomerRepository
   def initialize(customers)
     @customers = customers
   end
-  # def all
-  # end
-  #
+
+  def all
+    @customers
+  end
+
   # def random
   #   # returns a random instance
   # end

@@ -5,16 +5,17 @@ class InvoiceRepository
     new(invoices)
   end
 
-
   attr_reader :invoices
 
   def initialize(invoices)
     @invoices = invoices
   end
 
-  # def all
-  # end
-  #
+
+  def all
+    @invoices
+  end
+
   # def random
   #   # returns a random instance
   # end

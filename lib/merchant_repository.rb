@@ -11,9 +11,10 @@ class MerchantRepository
     @merchants = merchants
   end
 
-  # def all
-  # end
-  #
+  def all
+    @merchants
+  end
+
   # def random
   #   # returns a random instance
   # end
