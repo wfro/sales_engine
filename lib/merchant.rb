@@ -1,3 +1,6 @@
+require_relative 'item_repository'
+require_relative 'invoice_repository'
+
 class Merchant
   attr_reader :id,
               :name,
@@ -9,16 +12,17 @@ class Merchant
     @name       = data[:name]
     @created_at = data[:created_at]
     @updated_at = data[:updated_at]
+    @items      = Item
   end
   
-  # def items
-  #   # returns a collection of Item instances associated with that merchant for the products they sell
-  # end
+  def items(file='./data/items.csv')
+    ItemRepository.load(file).find_all_by_merchant_id(id)
+  end
 
-  # def invoices
-  #   # returns a collection of Invoice instances associated with that merchant from their known orders
-  # end
-  #
+  def invoices(file='./data/invoices.csv')
+    InvoiceRepository.load(file).find_all_by_merchant_id(id)
+  end
+  
   # def revenue
   #   # returns the total revenue for that merchant across all transactions
   # end
