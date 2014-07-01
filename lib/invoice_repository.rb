@@ -11,7 +11,6 @@ class InvoiceRepository
     @invoices = invoices
   end
 
-
   def all
     invoices
   end
@@ -19,12 +18,36 @@ class InvoiceRepository
   def random
     invoices.sample
   end
-  #
-  # def find_by_X(match)
-  #   # where X is some attribute, returns a single instance whose X attribute case-insensitive attribute matches the match parameter. For instance, Customer.find_by_first_name("Mary") could find a Customer with the first name attribute "Mary" or "mary" but not "Mary Ellen".
-  # end
-  #
-  # def find_all_by_X(match)
-  #   #  works just like find_by_X except it returns a collection of all matches. If there is no match, it returns an empty Array.
-  # end
+
+  def find_by_id(match)
+    invoices.detect { |invoice| invoice.id.downcase == match.downcase }
+  end
+
+  def find_by_customer_id(match)
+    invoices.detect { |invoice| invoice.customer_id.downcase == match.downcase }
+  end
+
+  def find_by_merchant_id(match)
+    invoices.detect { |invoice| invoice.merchant_id.downcase == match.downcase }
+  end
+
+  def find_by_status(match)
+    invoices.detect { |invoice| invoice.status.downcase == match.downcase }
+  end
+
+  def find_all_by_id(match)
+    invoices.select { |invoice| invoice.id.downcase == match.downcase }
+  end
+
+  def find_all_by_customer_id(match)
+    invoices.select { |invoice| invoice.customer_id.downcase == match.downcase }
+  end
+
+  def find_all_by_merchant_id(match)
+    invoices.select { |invoice| invoice.merchant_id.downcase == match.downcase }
+  end
+
+  def find_all_by_status(match)
+    invoices.select { |invoice| invoice.status.downcase == match.downcase }
+  end
 end
