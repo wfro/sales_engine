@@ -1,3 +1,5 @@
+require_relative 'invoice'
+
 class InvoiceRepository
   def self.load(filename="./data/invoices.csv")
     rows = CSV.open(filename, headers: true, header_converters: :symbol)

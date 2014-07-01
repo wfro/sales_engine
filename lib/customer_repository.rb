@@ -1,3 +1,5 @@
+require_relative 'customer'
+
 class CustomerRepository
   def self.load(filename='/.data/customers.csv')
     rows = CSV.open(filename, headers: true, header_converters: :symbol)

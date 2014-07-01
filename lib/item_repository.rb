@@ -1,3 +1,5 @@
+require_relative 'item'
+
 class ItemRepository
   def self.load(filename='./data/items.csv')
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
