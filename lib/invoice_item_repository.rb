@@ -34,6 +34,10 @@ class InvoiceItemRepository
     invoice_items.detect {|invoice_item| invoice_item.id == match }
   end
   
+  def find_by_invoice_id(match)
+    invoice_items.detect {|invoice_item| invoice_item.invoice_id == match }
+  end
+  
   def find_all_by_item_id(match)
     invoice_items.select {|invoice_item| invoice_item.item_id == match }
   end
@@ -44,5 +48,9 @@ class InvoiceItemRepository
   
   def find_all_by_id(match)
     invoice_items.select {|invoice_item| invoice_item.id == match }
+  end
+  
+  def find_all_by_invoice_id(match)
+    invoice_items.select { |invoice_item| invoice_item.invoice_id == match }
   end
 end

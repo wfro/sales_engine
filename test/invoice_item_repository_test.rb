@@ -24,19 +24,35 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
   
   def test_it_finds_by_quantity
-    results = invoice_item_repository.find_by_quantity('5')
-    assert_equal results.id, "1"
+    results = invoice_item_repository.find_by_quantity('8')
+    assert_equal results.quantity, "8"
 
-    results = invoice_item_repository.find_by_quantity('5')
-    refute_equal results.id, "2"
+    results = invoice_item_repository.find_by_quantity('8')
+    refute_equal results.quantity, "9"
   end
   
   def test_it_finds_by_id
     results = invoice_item_repository.find_by_id('1')
-    assert_equal results.quantity, "5"
+    assert_equal results.id, "1"
 
     results = invoice_item_repository.find_by_id('1')
-    refute_equal results.quantity, "9"
+    refute_equal results.id, "9"
+  end
+  
+  def test_it_finds_by_invoice_id
+    results = invoice_item_repository.find_by_invoice_id('1')
+    assert_equal results.id, "1"
+
+    results = invoice_item_repository.find_by_invoice_id('1')
+    refute_equal results.id, "9"
+  end
+  
+  def test_it_finds_all_by_invoice_id
+    results = invoice_item_repository.find_all_by_invoice_id('1')
+    assert results.length >= 8
+
+    results = invoice_item_repository.find_all_by_invoice_id('1')
+    refute results.length < 8
   end
   
   def test_it_finds_all_by_item_id
