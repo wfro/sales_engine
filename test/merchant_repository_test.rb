@@ -17,35 +17,35 @@ class MerchantRepositoryTest < Minitest::Test
   end
   
   def test_find_by_id
-    results = merchant_repository.find_by_id('1')
+    results = merchant_repository.find_by_id(1)
     assert_equal "Schroeder-Jerde", results.name
     
-    results = merchant_repository.find_by_id('2')
+    results = merchant_repository.find_by_id(2)
     refute_equal "Schroeder-Jerde", results.name
   end
   
   def test_find_by_name
     results = merchant_repository.find_by_name("Schroeder-Jerde")
-    assert_equal '1', results.id
+    assert_equal 1, results.id
     
     results = merchant_repository.find_by_name('Schroeder-Jerde')
-    refute_equal "2", results.id
+    refute_equal 2, results.id
   end
 
   def test_find_all_by_id
-    results = merchant_repository.find_all_by_id('1')
+    results = merchant_repository.find_all_by_id(1)
     assert_equal "Schroeder-Jerde", results[0].name
     
-    results = merchant_repository.find_all_by_id('2')
+    results = merchant_repository.find_all_by_id(2)
     refute_equal "Schroeder-Jerde", results[0].name
   end
   
   def test_find_all_by_name
     results = merchant_repository.find_all_by_name("Schroeder-Jerde")
-    assert_equal '1', results[0].id
+    assert_equal 1, results[0].id
     
     results = merchant_repository.find_all_by_name('Schroeder-Jerde')
-    refute_equal "2", results[0].id
+    refute_equal 2, results[0].id
   end
 
 end

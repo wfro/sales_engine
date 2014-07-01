@@ -3,7 +3,7 @@ require './test/test_helper'
 class CustomerTest < Minitest::Test
   def entry
     {
-      id: 1,
+      id: '1',
       first_name: "Robb",
       last_name: "Stark",
       created_at: "10 oclock",

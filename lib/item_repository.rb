@@ -26,11 +26,11 @@ class ItemRepository
   end
   
   def find_by_unit_price(match)
-    items.detect {|item| item.unit_price.downcase == match.downcase}
+    items.detect {|item| item.unit_price == match}
   end
   
   def find_by_merchant_id(match)
-    items.detect {|item| item.merchant_id.downcase == match.downcase}
+    items.detect {|item| item.merchant_id == match}
   end
   
   def find_all_by_name(match)
@@ -38,11 +38,11 @@ class ItemRepository
   end
   
   def find_all_by_unit_price(match)
-    items.select {|item| item.unit_price.downcase == match.downcase}
+    items.select {|item| item.unit_price == match}
   end
   
   def find_all_by_merchant_id(match)
-    items.select {|item| item.merchant_id.downcase == match.downcase}
+    items.select {|item| item.merchant_id == match}
   end
   # def most_revenue(x)
   #   # returns the top x item instances ranked by total revenue generated

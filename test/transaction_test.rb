@@ -16,9 +16,9 @@ class TransactionTest < Minitest::Test
   
   def test_attributes
     transaction = Transaction.new(entry)
-    assert_equal '1', transaction.id
-    assert_equal '1', transaction.invoice_id
-    assert_equal '4654405418249632', transaction.credit_card_number
+    assert_equal 1, transaction.id
+    assert_equal 1, transaction.invoice_id
+    assert_equal 4654405418249632, transaction.credit_card_number
     assert_equal '', transaction.credit_card_expiration_date
     assert_equal 'success', transaction.result
     assert_equal 'time', transaction.created_at

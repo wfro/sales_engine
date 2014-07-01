@@ -16,11 +16,11 @@ class InvoiceItemTest < Minitest::Test
   
   def test_attributes
     invoice_item = InvoiceItem.new(entry)
-    assert_equal '1', invoice_item.id
-    assert_equal '539', invoice_item.item_id
-    assert_equal '1', invoice_item.invoice_id
-    assert_equal '5', invoice_item.quantity
-    assert_equal '13635', invoice_item.unit_price
+    assert_equal 1, invoice_item.id
+    assert_equal 539, invoice_item.item_id
+    assert_equal 1, invoice_item.invoice_id
+    assert_equal 5, invoice_item.quantity
+    assert_equal 13635, invoice_item.unit_price
     assert_equal 'time', invoice_item.created_at
     assert_equal 'time2', invoice_item.updated_at
   end

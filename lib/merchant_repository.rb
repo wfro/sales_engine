@@ -23,7 +23,7 @@ class MerchantRepository
   end
   
   def find_by_id(match)
-    merchants.detect { |merchant| merchant.id.downcase == match.downcase }
+    merchants.detect { |merchant| merchant.id == match }
   end
   
   def find_by_name(match)
@@ -31,7 +31,7 @@ class MerchantRepository
   end
 
   def find_all_by_id(match)
-    merchants.select { |merchant| merchant.id.downcase == match.downcase }
+    merchants.select { |merchant| merchant.id == match }
   end
   
   def find_all_by_name(match)

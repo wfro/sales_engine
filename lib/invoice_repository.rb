@@ -22,15 +22,15 @@ class InvoiceRepository
   end
 
   def find_by_id(match)
-    invoices.detect { |invoice| invoice.id.downcase == match.downcase }
+    invoices.detect { |invoice| invoice.id == match }
   end
 
   def find_by_customer_id(match)
-    invoices.detect { |invoice| invoice.customer_id.downcase == match.downcase }
+    invoices.detect { |invoice| invoice.customer_id == match }
   end
 
   def find_by_merchant_id(match)
-    invoices.detect { |invoice| invoice.merchant_id.downcase == match.downcase }
+    invoices.detect { |invoice| invoice.merchant_id == match }
   end
 
   def find_by_status(match)
@@ -38,15 +38,15 @@ class InvoiceRepository
   end
 
   def find_all_by_id(match)
-    invoices.select { |invoice| invoice.id.downcase == match.downcase }
+    invoices.select { |invoice| invoice.id == match }
   end
 
   def find_all_by_customer_id(match)
-    invoices.select { |invoice| invoice.customer_id.downcase == match.downcase }
+    invoices.select { |invoice| invoice.customer_id == match }
   end
 
   def find_all_by_merchant_id(match)
-    invoices.select { |invoice| invoice.merchant_id.downcase == match.downcase }
+    invoices.select { |invoice| invoice.merchant_id == match }
   end
 
   def find_all_by_status(match)

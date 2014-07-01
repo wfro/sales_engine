@@ -9,7 +9,7 @@ class TransactionRepositoryTest < Minitest::Test
   end
   
   def test_it_loads_transaction_objects
-    assert_equal "4654405418249632", transaction_repository.transactions[0].credit_card_number
+    assert_equal 4654405418249632, transaction_repository.transactions[0].credit_card_number
   end
   
   def test_returns_all_transactions
@@ -17,42 +17,42 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_finds_by_id
-    result = transaction_repository.find_by_id('1')
-    assert_equal '4654405418249632', result.credit_card_number
+    result = transaction_repository.find_by_id(1)
+    assert_equal 4654405418249632, result.credit_card_number
   end
   
   def test_finds_by_invoice_id
-    result = transaction_repository.find_by_invoice_id('1')
-    assert_equal '4654405418249632', result.credit_card_number
+    result = transaction_repository.find_by_invoice_id(1)
+    assert_equal 4654405418249632, result.credit_card_number
   end
 
   def test_finds_by_credit_card_number
-    result = transaction_repository.find_by_credit_card_number('4654405418249632')
-    assert_equal '1', result.id
+    result = transaction_repository.find_by_credit_card_number(4654405418249632)
+    assert_equal 1, result.id
   end
 
   def test_finds_by_result
     result = transaction_repository.find_by_result('success')
-    assert_equal '1', result.id
+    assert_equal 1, result.id
   end
 
   def test_finds_all_by_id
-    result = transaction_repository.find_all_by_id('1')
-    assert_equal '4654405418249632', result[0].credit_card_number
+    result = transaction_repository.find_all_by_id(1)
+    assert_equal 4654405418249632, result[0].credit_card_number
   end
   
   def test_finds_all_by_invoice_id
-    result = transaction_repository.find_all_by_invoice_id('1')
-    assert_equal '4654405418249632', result[0].credit_card_number
+    result = transaction_repository.find_all_by_invoice_id(1)
+    assert_equal 4654405418249632, result[0].credit_card_number
   end
 
   def test_finds_all_by_credit_card_number
-    result = transaction_repository.find_all_by_credit_card_number('4654405418249632')
-    assert_equal '1', result[0].id
+    result = transaction_repository.find_all_by_credit_card_number(4654405418249632)
+    assert_equal 1, result[0].id
   end
 
   def test_finds_all_by_result
     result = transaction_repository.find_all_by_result('success')
-    assert_equal '1', result[0].id
+    assert_equal 1, result[0].id
   end
 end

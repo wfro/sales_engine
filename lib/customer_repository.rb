@@ -22,7 +22,7 @@ class CustomerRepository
   end
 
   def find_by_id(match)
-    customers.detect { |customer| customer.id.downcase == match.downcase }
+    customers.detect { |customer| customer.id == match }
   end
 
   def find_by_first_name(match)
@@ -34,7 +34,7 @@ class CustomerRepository
   end
 
   def find_all_by_id(match)
-    customers.select { |customer| customer.id.downcase == match.downcase }
+    customers.select { |customer| customer.id == match }
   end
 
   def find_all_by_first_name(match)

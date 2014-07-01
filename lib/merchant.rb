@@ -1,20 +1,22 @@
 require_relative 'item_repository'
 require_relative 'invoice_repository'
+require_relative 'invoice_item_repository'
 
 class Merchant
   attr_reader :id,
               :name,
               :created_at,
               :updated_at
-              
+
   def initialize(data)
-    @id         = data[:id]
+    @id         = data[:id].to_i
     @name       = data[:name]
     @created_at = data[:created_at]
     @updated_at = data[:updated_at]
     @items      = Item
+    @invoice_item_repository = InvoiceItemRepository.load
   end
-  
+
   def items(file='./data/items.csv')
     ItemRepository.load(file).find_all_by_merchant_id(id)
   end
@@ -22,11 +24,19 @@ class Merchant
   def invoices(file='./data/invoices.csv')
     InvoiceRepository.load(file).find_all_by_merchant_id(id)
   end
-  
-  # def revenue
-  #   # returns the total revenue for that merchant across all transactions
-  # end
-  #
+
+  def revenue
+    invoice_items = []
+    invoices.each do |invoice|
+      invoice_items << @invoice_item_repository.find_all_by_invoice_id(invoice.id)
+    end
+    revenue = 0
+    invoice_items.flatten.each do |item|
+      revenue += (item.quantity * item.unit_price)
+    end
+    revenue
+  end
+
   # def revenue(date)
   #   #  returns the total revenue for that merchant for a specific invoice date
   # end
