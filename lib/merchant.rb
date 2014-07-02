@@ -15,7 +15,6 @@ class Merchant
     @created_at = data[:created_at]
     @updated_at = data[:updated_at]
     @items      = Item
-    @invoice_item_repository = InvoiceItemRepository.load
   end
 
   def items(file='./data/items.csv')

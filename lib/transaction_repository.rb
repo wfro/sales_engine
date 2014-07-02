@@ -2,16 +2,18 @@ require 'csv'
 require_relative 'transaction'
 
 class TransactionRepository
-  def self.load(filename='./data/transactions.csv')
+  def self.load(filename, engine)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
     transactions = rows.map { |row| Transaction.new(row) }
-    new(transactions)
+    new(transactions, engine)
   end
   
   attr_reader :transactions
+              :engine
   
-  def initialize(transactions)
+  def initialize(transactions, engine)
     @transactions = transactions
+    @engine = engine
   end
     
   def all

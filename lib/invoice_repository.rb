@@ -1,16 +1,18 @@
 require_relative 'invoice'
 
 class InvoiceRepository
-  def self.load(filename="./data/invoices.csv")
+  def self.load(filename, engine)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
     invoices = rows.map { |row| Invoice.new(row) }
-    new(invoices)
+    new(invoices, engine)
   end
 
-  attr_reader :invoices
+  attr_reader :invoices,
+              :engine
 
-  def initialize(invoices)
+  def initialize(invoices, engine)
     @invoices = invoices
+    @engine = engine
   end
 
   def all
