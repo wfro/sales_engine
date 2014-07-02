@@ -2,16 +2,17 @@ require 'csv'
 require_relative 'merchant'
 
 class MerchantRepository
-  def self.load(filename="./data/merchants.csv")
-    rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    merchants = rows.map {|row| Merchant.new(row)}
-    new(merchants)
+  attr_reader :merchants,
+              :engine
+
+  def initialize(filename, engine)
+    @engine = engine
+    from_csv(filename)
   end
 
-  attr_reader :merchants
-
-  def initialize(merchants)
-    @merchants = merchants
+  def from_csv(filename)
+    rows = CSV.open(filename, headers: true, header_converters: :symbol)
+    @merchants = rows.map {|row| Merchant.new(row, self)}
   end
 
   def all
@@ -21,11 +22,11 @@ class MerchantRepository
   def random
     merchants.sample
   end
-  
+
   def find_by_id(match)
     merchants.detect { |merchant| merchant.id == match }
   end
-  
+
   def find_by_name(match)
     merchants.detect { |merchant| merchant.name.downcase == match.downcase }
   end
@@ -33,7 +34,7 @@ class MerchantRepository
   def find_all_by_id(match)
     merchants.select { |merchant| merchant.id == match }
   end
-  
+
   def find_all_by_name(match)
     merchants.select { |merchant| merchant.name.downcase == match.downcase }
   end

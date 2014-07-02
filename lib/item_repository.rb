@@ -1,16 +1,17 @@
 require_relative 'item'
 
 class ItemRepository
-  def self.load(filename='./data/items.csv')
-    rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    items = rows.map { |row| Item.new(row) }
-    new(items)
+  attr_reader :items
+              :engine
+
+  def initialize(filename, engine)
+    @engine = engine
+    from_csv(filename)
   end
 
-  attr_reader :items
-
-  def initialize(items)
-    @items = items
+  def from_csv(filename)
+    rows = CSV.open(filename, headers: true, header_converters: :symbol)
+    @items = rows.map { |row| Item.new(row, self) }
   end
 
   def all
@@ -20,7 +21,7 @@ class ItemRepository
   def random
     items.sample
   end
-  
+
   def find_by_name(match)
     items.detect {|item| item.name.downcase == match.downcase}
   end

@@ -2,10 +2,10 @@ require './test/test_helper'
 
 class MerchantRepositoryTest < Minitest::Test
   attr_reader :merchant_repository
-  
+
   def setup
-    filename = './test/fixtures/merchants.csv'
-    @merchant_repository = MerchantRepository.load(filename)
+    engine = SalesEngine.new('./test/fixtures')
+    @merchant_repository = engine.merchant_repository
   end
   
   def test_it_loads_merchant_objects
