@@ -1,3 +1,4 @@
+require 'pry'
 require_relative 'item_repository'
 require_relative 'invoice_repository'
 require_relative 'invoice_item_repository'
@@ -25,14 +26,16 @@ class Merchant
     InvoiceRepository.load(file).find_all_by_merchant_id(id)
   end
 
+  def get_invoice_items
+    invoices.collect { |invoice|
+ @invoice_item_repository.find_all_by_invoice_id(invoice.id) }
+  end
+
   def revenue
-    invoice_items = []
-    invoices.each do |invoice|
-      invoice_items << @invoice_item_repository.find_all_by_invoice_id(invoice.id)
-    end
+    invoice_items = get_invoice_items
     revenue = 0
-    invoice_items.flatten.each do |item|
-      revenue += (item.quantity * item.unit_price)
+    invoice_items.flatten.each do |invoice_item|
+      revenue += (invoice_item.quantity * invoice_item.unit_price)
     end
     revenue
   end

@@ -28,9 +28,10 @@ class MerchantTest < Minitest::Test
     invoices_length = merchant.invoices('./test/fixtures/invoices.csv').length
     assert invoices_length >= 1
   end
-  
+
   def test_it_finds_revenue
     merchant = Merchant.new(entry)
+    puts merchant.revenue
     assert merchant.revenue >= 1
   end
 end
