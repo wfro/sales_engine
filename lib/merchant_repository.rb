@@ -6,7 +6,6 @@ class MerchantRepository
               :engine
 
   def initialize(filename, engine)
-    # @filename = filename
     @engine = engine
     from_csv(filename, engine)
   end
