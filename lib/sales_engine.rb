@@ -6,7 +6,6 @@ require_relative 'customer_repository'
 require_relative 'transaction_repository'
 require_relative 'merchant_repository'
 
-
 class SalesEngine
   attr_reader :data
 
@@ -27,7 +26,7 @@ class SalesEngine
   end
 
   def merchant_repository(filename= "#{data}/merchants.csv")
-    @merchant_repository ||= MerchantRepository.load(filename, self)
+    @merchant_repository ||= MerchantRepository.new(filename, self)
   end
 
   def item_repository(filename= "#{data}/items.csv")
@@ -35,6 +34,6 @@ class SalesEngine
   end
 
   def transaction_repository(filename= "#{data}/transactions.csv")
-    @transaction_repository ||= TransactionRepository.load(filename ,self)
+    @transaction_repository ||= TransactionRepository.load(filename, self)
   end
 end

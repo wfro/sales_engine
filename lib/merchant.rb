@@ -9,20 +9,20 @@ class Merchant
               :created_at,
               :updated_at
 
-  def initialize(data)
-    @id         = data[:id].to_i
-    @name       = data[:name]
-    @created_at = data[:created_at]
-    @updated_at = data[:updated_at]
-    @items      = Item
+  def initialize(data, merchant_repo_ref)
+    @id                = data[:id].to_i
+    @name              = data[:name]
+    @created_at        = data[:created_at]
+    @updated_at        = data[:updated_at]
+    @merchant_repo_ref = merchant_repo_ref
   end
 
-  def items(file='./data/items.csv')
-    ItemRepository.load(file).find_all_by_merchant_id(id)
+  def items
+    @merchant_repo_ref.engine.item_repository.find_all_by_merchant_id(id)
   end
 
-  def invoices(file='./data/invoices.csv')
-    InvoiceRepository.load(file).find_all_by_merchant_id(id)
+  def invoices
+    @merchant_repo_ref.engine.invoice_repository.find_all_by_merchant_id(id)
   end
 
   def get_invoice_items

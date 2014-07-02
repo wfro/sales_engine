@@ -2,18 +2,18 @@ require 'csv'
 require_relative 'merchant'
 
 class MerchantRepository
-  def self.load(filename, engine)
-    rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    merchants = rows.map {|row| Merchant.new(row)}
-    new(merchants, engine)
-  end
-
-  attr_reader :merchants
+  attr_reader :merchants,
               :engine
 
-  def initialize(merchants, engine)
-    @merchants = merchants
+  def initialize(filename, engine)
+    # @filename = filename
     @engine = engine
+    from_csv(filename, engine)
+  end
+  
+  def from_csv(filename, engine)
+    rows = CSV.open(filename, headers: true, header_converters: :symbol)
+    @merchants = rows.map {|row| Merchant.new(row, self)}
   end
 
   def all
