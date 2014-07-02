@@ -30,7 +30,7 @@ class SalesEngine
   end
 
   def item_repository(filename= "#{data}/items.csv")
-    @item_repository ||= ItemRepository.load(filename, self)
+    @item_repository ||= ItemRepository.new(filename, self)
   end
 
   def transaction_repository(filename= "#{data}/transactions.csv")
