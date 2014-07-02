@@ -18,11 +18,11 @@ class SalesEngine
   end
 
   def invoice_repository(filename= "#{data}/invoices.csv")
-    @invoice_repository ||= InvoiceRepository.load(filename, self)
+    @invoice_repository ||= InvoiceRepository.new(filename, self)
   end
 
   def invoice_item_repository(filename= "#{data}/invoice_items.csv")
-    @invoice_item_repository ||= InvoiceItemRepository.load(filename, self)
+    @invoice_item_repository ||= InvoiceItemRepository.new(filename, self)
   end
 
   def merchant_repository(filename= "#{data}/merchants.csv")
