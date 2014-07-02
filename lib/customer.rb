@@ -20,7 +20,7 @@ class Customer
   # def transactions
   #   # returns an array of Transaction instances associated with the customer
   # end
-  #
+
   # def favorite_merchant
   #   # returns an instance of Merchant where the customer has conducted the most successful transactions
   # end
