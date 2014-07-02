@@ -6,12 +6,12 @@ class MerchantRepository
               :engine
 
   def initialize(filename, engine)
-    # @filename = filename
+    @filename = filename
     @engine = engine
-    from_csv(filename, engine)
+    from_csv(filename)
   end
-  
-  def from_csv(filename, engine)
+
+  def from_csv(filename)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
     @merchants = rows.map {|row| Merchant.new(row, self)}
   end
@@ -23,11 +23,11 @@ class MerchantRepository
   def random
     merchants.sample
   end
-  
+
   def find_by_id(match)
     merchants.detect { |merchant| merchant.id == match }
   end
-  
+
   def find_by_name(match)
     merchants.detect { |merchant| merchant.name.downcase == match.downcase }
   end
@@ -35,7 +35,7 @@ class MerchantRepository
   def find_all_by_id(match)
     merchants.select { |merchant| merchant.id == match }
   end
-  
+
   def find_all_by_name(match)
     merchants.select { |merchant| merchant.name.downcase == match.downcase }
   end
