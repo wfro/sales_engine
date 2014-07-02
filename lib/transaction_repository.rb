@@ -2,28 +2,27 @@ require 'csv'
 require_relative 'transaction'
 
 class TransactionRepository
-  def self.load(filename, engine)
-    rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    transactions = rows.map { |row| Transaction.new(row) }
-    new(transactions, engine)
-  end
-  
   attr_reader :transactions
               :engine
-  
-  def initialize(transactions, engine)
-    @transactions = transactions
+
+  def initialize(filename, engine)
     @engine = engine
+    from_csv(filename)
   end
-    
+
+  def from_csv(filename)
+    rows = CSV.open(filename, headers: true, header_converters: :symbol)
+    @transactions = rows.map { |row| Transaction.new(row, self) }
+  end
+
   def all
     transactions
   end
-  
+
   def random
     transactions.sample
   end
-  
+
   def find_by_id(match)
     transactions.detect { |t| t.id == match }
   end
