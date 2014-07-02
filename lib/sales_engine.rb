@@ -14,7 +14,7 @@ class SalesEngine
   end
 
   def customer_repository(filename="#{data}/customers.csv")
-    @customer_repository ||= CustomerRepository.load(filename, self)
+    @customer_repository ||= CustomerRepository.new(filename, self)
   end
 
   def invoice_repository(filename= "#{data}/invoices.csv")
@@ -30,10 +30,10 @@ class SalesEngine
   end
 
   def item_repository(filename= "#{data}/items.csv")
-    @item_repository ||= ItemRepository.load(filename, self)
+    @item_repository ||= ItemRepository.new(filename, self)
   end
 
   def transaction_repository(filename= "#{data}/transactions.csv")
-    @transaction_repository ||= TransactionRepository.load(filename, self)
+    @transaction_repository ||= TransactionRepository.new(filename, self)
   end
 end

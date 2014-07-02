@@ -5,14 +5,15 @@ class Item
               :merchant_id,
               :created_at,
               :updated_at
-              
-  def initialize(data)
-    @id          = data[:id].to_i
-    @name        = data[:name]
-    @unit_price  = data[:unit_price].to_i
-    @merchant_id = data[:merchant_id].to_i
-    @created_at  = data[:created_at]
-    @updated_at  = data[:updated_at]
+
+  def initialize(data, item_repo_ref)
+    @id            = data[:id].to_i
+    @name          = data[:name]
+    @unit_price    = data[:unit_price].to_i
+    @merchant_id   = data[:merchant_id].to_i
+    @created_at    = data[:created_at]
+    @updated_at    = data[:updated_at]
+    @item_repo_ref = item_repo_ref
   end
 
   # def invoice_item
