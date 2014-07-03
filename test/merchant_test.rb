@@ -2,7 +2,7 @@ require './test/test_helper'
 
 class MerchantTest < Minitest::Test
   attr_reader :merchant
-  
+
   def setup
     engine = SalesEngine.new('./test/fixtures')
     @merchant = engine.merchant_repository.merchants[0]
@@ -25,9 +25,19 @@ class MerchantTest < Minitest::Test
     assert merchant.invoices.length >= 1
   end
 
+  def test_it_finds_invoice_items
+    assert merchant.respond_to? :get_invoice_items
+    assert merchant.get_invoice_items
+    assert_equal 1, merchant.get_invoice_items.length
+  end
+
   def test_it_finds_revenue
-    skip
-    puts merchant.revenue
-    assert merchant.revenue >= 1
+    assert merchant.revenue
+    assert merchant.revenue == 185694
+  end
+
+  def test_it_finds_favorite_customer
+    assert merchant.favorite_customer
+    assert_equal Customer, merchant.favorite_customer.class
   end
 end
