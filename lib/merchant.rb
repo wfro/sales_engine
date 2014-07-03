@@ -21,11 +21,6 @@ class Merchant
   def items
     @merchant_repo_ref.engine.item_repository.find_all_by_merchant_id(id)
   end
-  
-  transaction_repository.transactions.each do |transaction|
-    customer = customer_respository.find_by_id(transasction.customer_id)
-    transaction.customer = customer
-  end
 
   def invoices
     @merchant_repo_ref.engine.invoice_repository.find_all_by_merchant_id(id)
