@@ -13,4 +13,6 @@ end
     assert_equal 75107, @item.unit_price
     assert_equal 1, @item.merchant_id
   end
+  
+  
 end
