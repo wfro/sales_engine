@@ -37,7 +37,7 @@ class InvoiceTest < Minitest::Test
     assert invoice.customer
     assert invoice.customer_id == 1
   end
-  
+
   def test_it_finds_the_merchant_on_an_invoice
     assert invoice.respond_to? :merchant
     assert invoice.merchant
