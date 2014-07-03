@@ -15,4 +15,10 @@ class TransactionTest < Minitest::Test
     assert_equal nil, transaction.credit_card_expiration_date
     assert_equal 'success', transaction.result
   end
+  
+  def test_it_returns_an_invoice
+    assert transaction.respond_to? "invoice"
+    assert transaction.invoice
+    assert_equal 1, transaction.invoice.id
+  end
 end

@@ -13,6 +13,9 @@ class SalesEngine
     @data = data
   end
 
+  def startup
+  end
+
   def customer_repository(filename="#{data}/customers.csv")
     @customer_repository ||= CustomerRepository.new(filename, self)
   end
