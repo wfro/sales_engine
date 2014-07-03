@@ -1,12 +1,11 @@
 require './test/test_helper'
 
 class CustomerRepositoryTest < Minitest::Test
-
   attr_reader :customer_repository
 
   def setup
-    filename = './test/fixtures/customers.csv'
-    @customer_repository = CustomerRepository.load(filename)
+    engine = SalesEngine.new('./test/fixtures')
+    @customer_repository = engine.customer_repository
   end
 
   def test_it_loads_customer_objects

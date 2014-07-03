@@ -4,14 +4,14 @@ class TransactionRepositoryTest < Minitest::Test
   attr_reader :transaction_repository
 
   def setup
-    filename = './test/fixtures/transactions.csv'
-    @transaction_repository = TransactionRepository.load(filename)
+    engine = SalesEngine.new('./test/fixtures/')
+    @transaction_repository = engine.transaction_repository
   end
-  
+
   def test_it_loads_transaction_objects
     assert_equal 4654405418249632, transaction_repository.transactions[0].credit_card_number
   end
-  
+
   def test_returns_all_transactions
     assert transaction_repository.all.length >= 10
   end
@@ -20,7 +20,7 @@ class TransactionRepositoryTest < Minitest::Test
     result = transaction_repository.find_by_id(1)
     assert_equal 4654405418249632, result.credit_card_number
   end
-  
+
   def test_finds_by_invoice_id
     result = transaction_repository.find_by_invoice_id(1)
     assert_equal 4654405418249632, result.credit_card_number

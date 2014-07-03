@@ -1,12 +1,11 @@
 require './test/test_helper'
-require 'csv'
 
 class ItemRepositoryTest < Minitest::Test
   attr_reader :item_repository
 
   def setup
-    filename = './test/fixtures/items.csv'
-    @item_repository = ItemRepository.load(filename)
+    engine = SalesEngine.new('./test/fixtures/')
+    @item_repository = engine.item_repository
   end
 
   # figure out if these tests are good
