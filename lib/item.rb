@@ -4,7 +4,8 @@ class Item
               :unit_price,
               :merchant_id,
               :created_at,
-              :updated_at
+              :updated_at,
+              :engine
 
   def initialize(data, item_repo_ref)
     @id            = data[:id].to_i
@@ -13,17 +14,17 @@ class Item
     @merchant_id   = data[:merchant_id].to_i
     @created_at    = data[:created_at]
     @updated_at    = data[:updated_at]
-    @item_repo_ref = item_repo_ref
+    @engine        = item_repo_ref.engine
   end
 
-  # def invoice_item
-  #   # returns a collection of InvoiceItems associated with this object
-  # end
-  #
-  # def merchant
-  #   # returns an instance of Merchant associated with this object
-  # end
-  #
+  def invoice_items
+    engine.invoice_item_repository.find_all_by_item_id(id)
+  end
+
+  def merchant
+    engine.merchant_repository.find_by_id(merchant_id)
+  end
+  
   # def best_day
   #   # returns the date with the most sales for the given item using the invoice date
   # end

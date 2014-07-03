@@ -17,7 +17,7 @@ class InvoiceItemTest < Minitest::Test
     assert invoice_item.invoice
     assert invoice_item.invoice.id == 1
   end
-  
+
   def test_it_retrieves_item_for_this_object
     assert invoice_item.respond_to? :item
     assert invoice_item.item

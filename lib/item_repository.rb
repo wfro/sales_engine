@@ -1,7 +1,7 @@
 require_relative 'item'
 
 class ItemRepository
-  attr_reader :items
+  attr_reader :items,
               :engine
 
   def initialize(filename, engine)
