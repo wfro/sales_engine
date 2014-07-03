@@ -13,6 +13,11 @@ class ItemRepositoryTest < Minitest::Test
     assert item_repository.items.length >= 10
   end
 
+  def test_it_finds_by_id
+    results = item_repository.find_by_id(1)
+    assert_equal 75107, results.unit_price
+  end
+
   def test_it_finds_by_name
     results = item_repository.find_by_name('Item Qui Esse')
     assert_equal results.id, 1
