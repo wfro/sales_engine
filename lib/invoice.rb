@@ -4,7 +4,8 @@ class Invoice
               :merchant_id,
               :status,
               :created_at,
-              :updated_at
+              :updated_at,
+              :engine
 
   def initialize(data, invoice_repo_ref)
     @id               = data[:id].to_i
@@ -13,13 +14,13 @@ class Invoice
     @status           = data[:status]
     @created_at       = data[:created_at]
     @updated_at       = data[:updated_at]
-    @invoice_repo_ref = invoice_repo_ref
+    @engine           = invoice_repo_ref.engine
   end
 
 
-  # def transactions
-  #   # returns a collection of associated Transaction instances
-  # end
+  def transactions
+    engine.transaction_repository.find_all_by_invoice_id(id)
+  end
   #
   # def invoice_items
   #   # returns a collection of associated InvoiceItem instances
