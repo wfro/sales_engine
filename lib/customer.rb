@@ -3,7 +3,8 @@ class Customer
               :first_name,
               :last_name,
               :created_at,
-              :updated_at
+              :updated_at,
+              :engine
 
   def initialize(data, customer_repo_ref)
     @id                = data[:id].to_i
@@ -11,12 +12,12 @@ class Customer
     @last_name         = data[:last_name]
     @created_at        = data[:created_at]
     @updated_at        = data[:updated_at]
-    @customer_repo_ref = customer_repo_ref
+    @engine            = customer_repo_ref.engine
   end
 
-  # def invoices
-  #   # returns a collection of Invoice instances associated with this object.
-  # end
+  def invoices
+    engine.invoice_repository.find_all_by_customer_id(id)
+  end
   #
   # def transactions
   #   # returns an array of Transaction instances associated with the customer
