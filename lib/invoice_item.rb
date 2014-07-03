@@ -5,7 +5,8 @@ class InvoiceItem
               :quantity,
               :unit_price,
               :created_at,
-              :updated_at
+              :updated_at,
+              :engine
 
   def initialize(data, invoice_item_repo_ref)
     @id                    = data[:id].to_i
@@ -15,10 +16,10 @@ class InvoiceItem
     @unit_price            = data[:unit_price].to_i
     @created_at            = data[:created_at]
     @updated_at            = data[:updated_at]
-    @invoice_item_repo_ref = invoice_item_repo_ref
+    @engine                = invoice_item_repo_ref.engine
   end
 
-  # def invoice
-  #   # returns an instance of Invoice associated with this object
-  # end
+  def invoice
+    engine.invoice_repository.find_by_id(invoice_id)
+  end
 end
