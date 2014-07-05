@@ -2,7 +2,7 @@ require './test/test_helper'
 
 class CustomerTest < Minitest::Test
   attr_reader :customer
-  
+
   def setup
     engine = SalesEngine.new('./test/fixtures')
     @customer = engine.customer_repository.customers[0]
@@ -13,10 +13,16 @@ class CustomerTest < Minitest::Test
     assert_equal "Joey", @customer.first_name
     assert_equal "Ondricka", @customer.last_name
   end
-  
+
   def test_it_retrieves_invoices_for_a_customer
     assert customer.respond_to? :invoices
     assert customer.invoices
     assert customer.invoices.length >= 8
+  end
+
+  def test_it_retrieves_transactions_for_a_customer
+    assert customer.respond_to? :transactions
+    assert customer.transactions
+    assert customer.transactions.length >= 8
   end
 end

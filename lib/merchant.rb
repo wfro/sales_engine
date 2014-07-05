@@ -48,9 +48,6 @@ class Merchant
     # find customer with most
     
     # returns the Customer who has conducted the most successful transactions
-    
-    
-    
   end
   
   # def customers_with_pending_invoices

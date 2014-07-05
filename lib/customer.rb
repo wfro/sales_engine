@@ -18,10 +18,11 @@ class Customer
   def invoices
     engine.invoice_repository.find_all_by_customer_id(id)
   end
-  #
-  # def transactions
-  #   # returns an array of Transaction instances associated with the customer
-  # end
+
+  def transactions
+    invoices = engine.invoice_repository.find_all_by_customer_id(id)
+    invoices.map { |invoice| invoice.transactions }
+  end
 
   # def favorite_merchant
   #   # returns an instance of Merchant where the customer has conducted the most successful transactions
