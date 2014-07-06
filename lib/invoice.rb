@@ -32,7 +32,6 @@ class Invoice
     end
   end
 
-  # these two need to return their respective instances
   def customer
     engine.customer_repository.find_by_id(customer_id)
   end

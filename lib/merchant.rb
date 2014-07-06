@@ -3,7 +3,6 @@ class Merchant
               :name,
               :created_at,
               :updated_at,
-              :items,
               :engine
 
   def initialize(data, merchant_repo_ref)

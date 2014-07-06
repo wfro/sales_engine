@@ -1,3 +1,5 @@
+require 'pry'
+
 class Customer
   attr_reader :id,
               :first_name,
@@ -24,8 +26,28 @@ class Customer
   end
 
   def favorite_merchant
-    # we have all transactions for a particular customer
-    # find merchants associated with transactions
-    transactions.map { |t| t.merchant }
+    # first working? solution:
+    #   already have all transactions for a given customer
+    #   find merchants associated with transactions (this will be problematic)
+    #     multiple transactions from same merchant
+    #   for each merchant find its invoices
+    #     currently searching through all invoices for a merchant
+    #     way to only search invoices attached to this customer?
+    #   for each invoice check if the customer_id matches self.id
+    #   add one to the hash value of the corresponding merchant
+    merchants = transactions.map { |t| t.merchant if t.result == 'success' }
+
+    merchant_hash = {}
+
+    # populate the hash
+    merchants.each { |merchant| merchant_hash[merchant] = 0 }
+
+    # doing it live
+    merchants.each do |merchant|
+      invoices = merchant.invoices
+      invoices.each { |invoice| merchant_hash[merchant] += 1 if invoice.customer_id == id }
+    end
+    merchant_hash.max_by{ |k, v| v }[0]
   end
+
 end
