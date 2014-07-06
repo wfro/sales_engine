@@ -22,7 +22,7 @@ class Merchant
     engine.invoice_repository.find_all_by_merchant_id(id)
   end
 
-  def get_invoice_items # why does this return 2d array
+  def get_invoice_items
     invoices.collect { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }
   end
 
@@ -35,7 +35,7 @@ class Merchant
   # def revenue(date)
   #   #  returns the total revenue for that merchant for a specific invoice date
   # end
-  
+
   def favorite_customer
     # find invoices that match this merchant (sort by customer)
     # customer_ids = invoices.map { |invoice| invoice.customer_id }
@@ -46,10 +46,10 @@ class Merchant
     # merchant_transactions = invoices.map { |invoice| engine.transaction_repository.find_all_by_invoice_id(invoice.id) }.flatten
     # successful_transactions = merchant_transactions.select { |transaction| transaction.result == "success" }
     # find customer with most
-    
+
     # returns the Customer who has conducted the most successful transactions
   end
-  
+
   # def customers_with_pending_invoices
   #   # returns a collection of Customer instances which have pending (unpaid) invoices
   # end

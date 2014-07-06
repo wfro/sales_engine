@@ -32,11 +32,12 @@ class Invoice
     end
   end
 
+  # these two need to return their respective instances
   def customer
-    engine.invoice_repository.find_by_customer_id(customer_id)
+    engine.customer_repository.find_by_id(customer_id)
   end
 
   def merchant
-    engine.invoice_repository.find_by_merchant_id(merchant_id)
+    engine.merchant_repository.find_by_id(merchant_id)
   end
 end

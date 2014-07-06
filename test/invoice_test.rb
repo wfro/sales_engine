@@ -35,12 +35,12 @@ class InvoiceTest < Minitest::Test
   def test_it_finds_the_customer_on_an_invoice
     assert invoice.respond_to? :customer
     assert invoice.customer
-    assert invoice.customer_id == 1
+    assert invoice.customer.id == 1
   end
 
   def test_it_finds_the_merchant_on_an_invoice
     assert invoice.respond_to? :merchant
     assert invoice.merchant
-    assert invoice.merchant_id == 26
+    assert invoice.merchant.id == 26
   end
 end

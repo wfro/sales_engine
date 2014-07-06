@@ -23,6 +23,13 @@ class CustomerTest < Minitest::Test
   def test_it_retrieves_transactions_for_a_customer
     assert customer.respond_to? :transactions
     assert customer.transactions
-    assert customer.transactions.length >= 8
+    puts customer.transactions.length
+    assert customer.transactions.length >= 7
+  end
+
+  def test_it_retrieves_favorite_merchant
+    assert customer.respond_to? :favorite_merchant
+    assert customer.favorite_merchant
+    assert_equal Merchant, customer.favorite_merchant[0].class
   end
 end
