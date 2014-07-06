@@ -39,5 +39,6 @@ class MerchantTest < Minitest::Test
   def test_it_finds_favorite_customer
     assert merchant.favorite_customer
     assert_equal Customer, merchant.favorite_customer.class
+    assert_equal "Mariah", merchant.favorite_customer.first_name
   end
 end

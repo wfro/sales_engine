@@ -1,5 +1,3 @@
-require 'pry'
-
 class Customer
   attr_reader :id,
               :first_name,
@@ -35,19 +33,23 @@ class Customer
     #     way to only search invoices attached to this customer?
     #   for each invoice check if the customer_id matches self.id
     #   add one to the hash value of the corresponding merchant
-    merchants = transactions.map { |t| t.merchant if t.result == 'success' }
+    # and not 15 minutes later found a different solution
+    #   we already have all transactions, just create an array adding the
+    #   merchant for each transaction, and find which is repeated most
+    merchants = transactions.map { |t| t.merchant } #if t.result == 'success' }
+    dups = merchants.select{ |element| merchants.count(element) > 1 }
+    dups.max
+    # merchant_hash = {}
 
-    merchant_hash = {}
+    # # populate the hash
+    # merchants.each { |merchant| merchant_hash[merchant] = 0 }
 
-    # populate the hash
-    merchants.each { |merchant| merchant_hash[merchant] = 0 }
-
-    # doing it live
-    merchants.each do |merchant|
-      invoices = merchant.invoices
-      invoices.each { |invoice| merchant_hash[merchant] += 1 if invoice.customer_id == id }
-    end
-    merchant_hash.max_by{ |k, v| v }[0]
+    # # doing it live
+    # merchants.each do |merchant|
+    #   invoices = merchant.invoices
+    #   invoices.each { |invoice| merchant_hash[merchant] += 1 if invoice.customer_id == id }
+    # end
+    # merchant_hash.max_by{ |k, v| v }[0]
   end
 
 end

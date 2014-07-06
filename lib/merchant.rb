@@ -36,16 +36,22 @@ class Merchant
   # end
 
   def favorite_customer
-    # find invoices that match this merchant (sort by customer)
-    # customer_ids = invoices.map { |invoice| invoice.customer_id }
-    # customer_objects = customer_ids.each { |id| engine.customer_repository.find_by_id(id) }
-    # # find customers that match those invoices
-    # # find customer ids; return customer objects with find_all_by_id
-    # # find successful transactions that match those (X) invoices
-    # merchant_transactions = invoices.map { |invoice| engine.transaction_repository.find_all_by_invoice_id(invoice.id) }.flatten
-    # successful_transactions = merchant_transactions.select { |transaction| transaction.result == "success" }
-    # find customer with most
+    customers = invoices.map { |invoice| invoice.customer }
 
+    hash = {}
+    customers.each { |customer| hash[customer] = 0 }
+
+    # doing it live
+    customers.each do |customer|
+      transactions = customer.transactions
+      transactions.each { |transaction| hash[customer] += 1 if transaction.merchant.id == id }
+    end
+    hash.max_by{ |k, v| v }[0]
+  
+    # find customers that shop here
+    # loop through customers
+    #   for each customer, find transactions that match merchant id
+    #   track num transactions per customer, return customer with highest.
     # returns the Customer who has conducted the most successful transactions
   end
 

@@ -23,7 +23,6 @@ class Transaction
     engine.invoice_repository.find_by_id(invoice_id)
   end
 
-  # try it out?
   def merchant
     invoice.merchant
   end
