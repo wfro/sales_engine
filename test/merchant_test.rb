@@ -33,14 +33,20 @@ class MerchantTest < Minitest::Test
   end
 
   def test_it_finds_invoice_items
-    assert merchant.respond_to? :get_invoice_items
-    assert merchant.get_invoice_items
-    assert_equal 1, merchant.get_invoice_items.length
+    assert merchant.respond_to? :invoice_items
+    assert merchant.invoice_items
+    assert_equal 3, merchant.invoice_items.length
   end
 
   def test_it_finds_revenue
     assert merchant.revenue
-    assert_equal BigDecimal('1856.94'), merchant.revenue
+    assert_equal BigDecimal('2785.41'), merchant.revenue
+  end
+
+  def test_it_finds_revenue_by_date
+    date =  Date.parse("27 Mar 2012")
+    puts merchant.revenue(date)
+    # assert_equal BigDecimal('1856.94'), merchant.revenue(date)
   end
 
   def test_it_finds_favorite_customer

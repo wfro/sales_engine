@@ -23,19 +23,22 @@ class Merchant
     engine.invoice_repository.find_all_by_merchant_id(id)
   end
 
-  def get_invoice_items
-    invoices.collect { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }
+  def invoice_items
+    invoices.collect { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
   end
 
-  def revenue
-    get_invoice_items.flatten.inject(0) do |result, invoice_item|
-      result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
+  def revenue(date=nil)
+    if date
+      items_by_date = invoice_items.select { |invoice_item| invoice_item.created_at == date }
+      items_by_date.flatten.inject(0) do |result, invoice_item|
+        result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
+      end
+    else
+      invoice_items.inject(0) do |result, invoice_item|
+        result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
+      end
     end
   end
-
-  # def revenue(date)
-  #   #  returns the total revenue for that merchant for a specific invoice date
-  # end
 
   def favorite_customer
     # customers = invoices.map { |invoice| invoice.customer }
