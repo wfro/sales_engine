@@ -4,7 +4,7 @@ class CustomerTest < Minitest::Test
   attr_reader :customer
 
   def setup
-    engine = SalesEngine.new('./test/fixtures')
+    engine = SalesEngine.new('./data')
     @customer = engine.customer_repository.customers[0]
   end
 
