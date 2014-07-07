@@ -11,8 +11,13 @@ class ItemTest < Minitest::Test
   def test_item_attributes
     assert_equal 1, @item.id
     assert_equal "Item Qui Esse", @item.name
-    assert_equal 75107, @item.unit_price
     assert_equal 1, @item.merchant_id
+  end
+
+  def test_it_converts_unit_price_to_BigDecimal
+    puts BigDecimal.new('100') == 100
+    assert_equal 75107, item.unit_price
+    assert_equal BigDecimal, item.unit_price.class
   end
 
   def test_it_retrieves_invoice_items_for_an_item
@@ -20,7 +25,7 @@ class ItemTest < Minitest::Test
     assert item.invoice_items
     assert item.invoice_items.length >= 1
   end
-  
+
   def test_it_retrieves_the_merchant_for_an_item
     assert item.respond_to? :merchant
     assert item.merchant
