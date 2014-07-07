@@ -47,5 +47,4 @@ class MerchantRepositoryTest < Minitest::Test
     results = merchant_repository.find_all_by_name('Schroeder-Jerde')
     refute_equal 2, results[0].id
   end
-
 end

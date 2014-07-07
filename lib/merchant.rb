@@ -37,17 +37,25 @@ class Merchant
 
   def favorite_customer
     customers = invoices.map { |invoice| invoice.customer }
-
-    hash = {}
-    customers.each { |customer| hash[customer] = 0 }
-
-    # doing it live
-    customers.each do |customer|
-      transactions = customer.transactions
-      transactions.each { |transaction| hash[customer] += 1 if transaction.merchant.id == id }
+    all_customers = customers.each do |customer|
+      customer.transactions.map do |transaction|
+        customer if transaction.result == 'success'
+      end
     end
-    hash.max_by{ |k, v| v }[0]
-  
+    all_customers.group_by { |item| item }.values.max_by(&:size).first
+
+    # customers = invoices.map { |invoice| invoice.customer }
+    #
+    # hash = {}
+    # customers.each { |customer| hash[customer] = 0 }
+    #
+    # # doing it live
+    # customers.each do |customer|
+    #   transactions = customer.transactions
+    #   transactions.each { |transaction| hash[customer] += 1 if transaction.merchant.id == id }
+    # end
+    # hash.max_by{ |k, v| v }[0]
+
     # find customers that shop here
     # loop through customers
     #   for each customer, find transactions that match merchant id

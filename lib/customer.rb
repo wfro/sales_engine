@@ -25,7 +25,7 @@ class Customer
 
   def favorite_merchant
     merchants = transactions.map { |t| t.merchant if t.result == 'success' }
-    merchants.group_by { |n| n }.values.max_by(&:size).first
+    merchants.group_by { |item| item }.values.max_by(&:size).first
   end
 
 end
