@@ -15,9 +15,11 @@ class CustomerTest < Minitest::Test
   end
 
   def test_converts_dates_to_Date_objects
-
+    assert customer.created_at
+    assert customer.updated_at
+    assert Date, customer.created_at.class
   end
-  
+
   def test_it_retrieves_invoices_for_a_customer
     assert customer.respond_to? :invoices
     assert customer.invoices

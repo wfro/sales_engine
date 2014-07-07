@@ -1,4 +1,5 @@
 require 'bigdecimal'
+require 'date'
 
 class Item
   attr_reader :id,
@@ -14,8 +15,8 @@ class Item
     @name          = data[:name]
     @unit_price    = BigDecimal.new(data[:unit_price].to_i) / BigDecimal.new(100)
     @merchant_id   = data[:merchant_id].to_i
-    @created_at    = data[:created_at]
-    @updated_at    = data[:updated_at]
+    @created_at    = Date.parse(data[:created_at])
+    @updated_at    = Date.parse(data[:updated_at])
     @engine        = item_repo_ref.engine
   end
 

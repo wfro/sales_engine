@@ -14,6 +14,12 @@ class ItemTest < Minitest::Test
     assert_equal 1, @item.merchant_id
   end
 
+  def test_it_converts_date_to_Date_objects
+    assert item.created_at
+    assert item.updated_at
+    assert Date, item.created_at.class
+  end
+
   def test_it_converts_unit_price_to_BigDecimal
     assert_equal BigDecimal.new('751.07'), item.unit_price
     assert_equal BigDecimal, item.unit_price.class

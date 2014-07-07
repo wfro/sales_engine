@@ -1,3 +1,5 @@
+require 'date'
+
 class Customer
   attr_reader :id,
               :first_name,
@@ -10,8 +12,8 @@ class Customer
     @id                = data[:id].to_i
     @first_name        = data[:first_name]
     @last_name         = data[:last_name]
-    @created_at        = data[:created_at]
-    @updated_at        = data[:updated_at]
+    @created_at        = Date.parse(data[:created_at])
+    @updated_at        = Date.parse(data[:updated_at])
     @engine            = customer_repo_ref.engine
   end
 
