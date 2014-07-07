@@ -37,13 +37,13 @@ class Customer
     #   we already have all transactions, just create an array adding the
     #   merchant for each transaction, and find which is repeated most
     merchants = transactions.map { |t| t.merchant } #if t.result == 'success' }
-    dups = merchants.select{ |element| merchants.count(element) > 1 }
+    dups = merchants.select{ |merchant| merchants.count(merchant) > 1 }
     dups.max
     # merchant_hash = {}
-
+    #
     # # populate the hash
     # merchants.each { |merchant| merchant_hash[merchant] = 0 }
-
+    #
     # # doing it live
     # merchants.each do |merchant|
     #   invoices = merchant.invoices
