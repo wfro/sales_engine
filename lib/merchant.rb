@@ -15,14 +15,6 @@ class Merchant
     @engine            = merchant_repo_ref.engine
   end
 
-  # def created_at
-  #   Date.parse(@created_at)
-  # end
-  #
-  # def updated_at
-  #   Date.parse(@updated_at)
-  # end
-
   def items
     engine.item_repository.find_all_by_merchant_id(id)
   end
