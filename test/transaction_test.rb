@@ -8,6 +8,13 @@ class TransactionTest < Minitest::Test
     @transaction = engine.transaction_repository.transactions[0]
   end
 
+  def test_dates_are_converted_to_Date_objects
+    assert transaction.created_at
+    assert transaction.updated_at
+    assert_equal Date, transaction.created_at.class
+    assert_equal Date, transaction.updated_at.class
+  end
+
   def test_attributes
     assert_equal 1, transaction.id
     assert_equal 1, transaction.invoice_id
