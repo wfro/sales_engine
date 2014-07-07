@@ -14,6 +14,10 @@ class CustomerTest < Minitest::Test
     assert_equal "Ondricka", @customer.last_name
   end
 
+  def test_converts_dates_to_Date_objects
+
+  end
+  
   def test_it_retrieves_invoices_for_a_customer
     assert customer.respond_to? :invoices
     assert customer.invoices

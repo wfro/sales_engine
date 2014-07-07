@@ -14,6 +14,13 @@ class InvoiceTest < Minitest::Test
     assert_equal 26, invoice.merchant_id
   end
 
+  def test_it_converts_dates_to_Date_objects
+    assert invoice.created_at
+    assert invoice.updated_at
+    assert_equal Date, invoice.created_at.class
+    assert_equal Date, invoice.updated_at.class
+  end
+
   def test_it_finds_all_transactions_on_an_invoice
     assert invoice.respond_to? :transactions
     assert invoice.transactions

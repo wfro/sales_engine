@@ -1,3 +1,5 @@
+require 'date'
+
 class Merchant
   attr_reader :id,
               :name,
@@ -7,11 +9,19 @@ class Merchant
 
   def initialize(data, merchant_repo_ref)
     @id                = data[:id].to_i
-    @name              = data[:name]
-    @created_at        = data[:created_at]
-    @updated_at        = data[:updated_at]
+    @name              = data[:name].to_s
+    @created_at        = Date.parse(data[:created_at])
+    @updated_at        = Date.parse(data[:updated_at])
     @engine            = merchant_repo_ref.engine
   end
+
+  # def created_at
+  #   Date.parse(@created_at)
+  # end
+  #
+  # def updated_at
+  #   Date.parse(@updated_at)
+  # end
 
   def items
     engine.item_repository.find_all_by_merchant_id(id)
