@@ -14,6 +14,13 @@ class InvoiceTest < Minitest::Test
     assert_equal 26, invoice.merchant_id
   end
 
+  def test_it_converts_dates_to_Date_objects
+    assert invoice.created_at
+    assert invoice.updated_at
+    assert_equal Date, invoice.created_at.class
+    assert_equal Date, invoice.updated_at.class
+  end
+
   def test_it_finds_all_transactions_on_an_invoice
     assert invoice.respond_to? :transactions
     assert invoice.transactions
@@ -35,12 +42,12 @@ class InvoiceTest < Minitest::Test
   def test_it_finds_the_customer_on_an_invoice
     assert invoice.respond_to? :customer
     assert invoice.customer
-    assert invoice.customer_id == 1
+    assert invoice.customer.id == 1
   end
 
   def test_it_finds_the_merchant_on_an_invoice
     assert invoice.respond_to? :merchant
     assert invoice.merchant
-    assert invoice.merchant_id == 26
+    assert invoice.merchant.id == 26
   end
 end

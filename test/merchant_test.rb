@@ -1,16 +1,23 @@
 require './test/test_helper'
 
 class MerchantTest < Minitest::Test
-  attr_reader :merchant
-  
+  attr_reader :merchant, :engine
+
   def setup
-    engine = SalesEngine.new('./test/fixtures')
+    @engine = SalesEngine.new('./test/fixtures')
     @merchant = engine.merchant_repository.merchants[0]
   end
 
   def test_attributes
     assert_equal 1, @merchant.id
     assert_equal "Schroeder-Jerde", @merchant.name
+  end
+
+  def test_dates_are_converted_to_Date_objects
+    assert merchant.created_at
+    assert merchant.updated_at
+    assert_equal Date, merchant.created_at.class
+    assert_equal Date, merchant.updated_at.class
   end
 
   def test_it_finds_items_for_a_merchant
@@ -25,9 +32,20 @@ class MerchantTest < Minitest::Test
     assert merchant.invoices.length >= 1
   end
 
+  def test_it_finds_invoice_items
+    assert merchant.respond_to? :get_invoice_items
+    assert merchant.get_invoice_items
+    assert_equal 1, merchant.get_invoice_items.length
+  end
+
   def test_it_finds_revenue
-    skip
-    puts merchant.revenue
-    assert merchant.revenue >= 1
+    assert merchant.revenue
+    assert_equal BigDecimal('1856.94'), merchant.revenue
+  end
+
+  def test_it_finds_favorite_customer
+    assert merchant.favorite_customer
+    assert_equal Customer, merchant.favorite_customer.class
+    assert_equal "Mariah", merchant.favorite_customer.first_name
   end
 end

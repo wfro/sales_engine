@@ -1,3 +1,5 @@
+require 'date'
+
 class Customer
   attr_reader :id,
               :first_name,
@@ -10,20 +12,24 @@ class Customer
     @id                = data[:id].to_i
     @first_name        = data[:first_name]
     @last_name         = data[:last_name]
-    @created_at        = data[:created_at]
-    @updated_at        = data[:updated_at]
+    @created_at        = Date.parse(data[:created_at])
+    @updated_at        = Date.parse(data[:updated_at])
     @engine            = customer_repo_ref.engine
   end
 
   def invoices
     engine.invoice_repository.find_all_by_customer_id(id)
   end
-  #
-  # def transactions
-  #   # returns an array of Transaction instances associated with the customer
-  # end
 
-  # def favorite_merchant
-  #   # returns an instance of Merchant where the customer has conducted the most successful transactions
-  # end
+  def transactions
+    invoices.map { |invoice| invoice.transactions }.flatten
+  end
+
+  def favorite_merchant
+    # look into possibly using a hash to search results
+    # only add merchant once, add 1 to value for each successful transaction
+    merchants = transactions.map { |t| t.merchant if t.result == 'success' }
+    merchants.group_by { |item| item }.values.max_by(&:size).first
+  end
+
 end

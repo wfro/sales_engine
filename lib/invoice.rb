@@ -1,3 +1,5 @@
+require 'date'
+
 class Invoice
   attr_reader :id,
               :customer_id,
@@ -8,13 +10,13 @@ class Invoice
               :engine
 
   def initialize(data, invoice_repo_ref)
-    @id               = data[:id].to_i
-    @customer_id      = data[:customer_id].to_i
-    @merchant_id      = data[:merchant_id].to_i
-    @status           = data[:status]
-    @created_at       = data[:created_at]
-    @updated_at       = data[:updated_at]
-    @engine           = invoice_repo_ref.engine
+    @id          = data[:id].to_i
+    @customer_id = data[:customer_id].to_i
+    @merchant_id = data[:merchant_id].to_i
+    @status      = data[:status]
+    @created_at  = Date.parse(data[:created_at])
+    @updated_at  = Date.parse(data[:updated_at])
+    @engine      = invoice_repo_ref.engine
   end
 
 
@@ -33,10 +35,10 @@ class Invoice
   end
 
   def customer
-    engine.invoice_repository.find_by_customer_id(customer_id)
+    engine.customer_repository.find_by_id(customer_id)
   end
 
   def merchant
-    engine.invoice_repository.find_by_merchant_id(merchant_id)
+    engine.merchant_repository.find_by_id(merchant_id)
   end
 end
