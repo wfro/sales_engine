@@ -13,7 +13,7 @@ class InvoiceItemTest < Minitest::Test
   end
 
   def test_it_converts_unit_price_to_BigDecimal
-    assert_equal 13635, invoice_item.unit_price
+    assert_equal BigDecimal('136.35'), invoice_item.unit_price
     assert_equal BigDecimal, invoice_item.unit_price.class
   end
 
@@ -26,6 +26,6 @@ class InvoiceItemTest < Minitest::Test
   def test_it_retrieves_item_for_this_object
     assert invoice_item.respond_to? :item
     assert invoice_item.item
-    assert_equal 13635, invoice_item.item.unit_price
+    assert_equal BigDecimal('136.35'), invoice_item.item.unit_price
   end
 end

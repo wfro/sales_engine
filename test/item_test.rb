@@ -15,8 +15,7 @@ class ItemTest < Minitest::Test
   end
 
   def test_it_converts_unit_price_to_BigDecimal
-    puts BigDecimal.new('100') == 100
-    assert_equal 75107, item.unit_price
+    assert_equal BigDecimal.new('751.07'), item.unit_price
     assert_equal BigDecimal, item.unit_price.class
   end
 

@@ -27,7 +27,7 @@ class Merchant
 
   def revenue
     get_invoice_items.flatten.inject(0) do |result, invoice_item|
-      result + (invoice_item.quantity * invoice_item.unit_price)
+      result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
     end
   end
 

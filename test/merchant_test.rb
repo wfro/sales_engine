@@ -33,7 +33,7 @@ class MerchantTest < Minitest::Test
 
   def test_it_finds_revenue
     assert merchant.revenue
-    assert merchant.revenue == 185694
+    assert_equal BigDecimal('1856.94'), merchant.revenue
   end
 
   def test_it_finds_favorite_customer
