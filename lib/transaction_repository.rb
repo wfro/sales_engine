@@ -54,7 +54,7 @@ class TransactionRepository
   def find_all_by_result(match)
     transactions.select { |t| t.result.downcase == match.downcase }
   end
-  
+
   def inspect
     "#<#{self.class} #{@transactions.size} rows>"
   end

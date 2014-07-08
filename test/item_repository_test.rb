@@ -4,71 +4,74 @@ class ItemRepositoryTest < Minitest::Test
   attr_reader :item_repository
 
   def setup
-    engine = SalesEngine.new('./test/fixtures/')
+    engine = SalesEngine.new('./data')
     @item_repository = engine.item_repository
   end
 
-  # figure out if these tests are good
-  def test_it_loads_Item_objects
-    assert item_repository.items.length >= 10
-  end
+  # def test_it_loads_Item_objects
+  #   assert item_repository.items.length >= 10
+  # end
+  #
+  # def test_it_finds_by_id
+  #   results = item_repository.find_by_id(1)
+  #   assert_equal BigDecimal('751.07'), results.unit_price
+  # end
+  #
+  # def test_it_finds_by_name
+  #   results = item_repository.find_by_name('Item Qui Esse')
+  #   assert_equal results.id, 1
+  #
+  #   results = item_repository.find_by_name('Item Qui Esse')
+  #   refute_equal results.id, 2
+  # end
+  #
+  # def test_it_finds_by_unit_price
+  #   results = item_repository.find_by_unit_price(BigDecimal('751.07'))
+  #   assert_equal results.id, 1
+  #
+  #   results = item_repository.find_by_unit_price(BigDecimal('751.07'))
+  #   refute_equal results.id, 2
+  # end
+  #
+  # def test_it_finds_by_merchant_id
+  #   results = item_repository.find_by_merchant_id(1)
+  #   assert_equal results.id, 1
+  #
+  #   results = item_repository.find_by_merchant_id(1)
+  #   refute_equal results.id, 2
+  # end
+  #
+  # def test_it_finds_all_by_name
+  #   results = item_repository.find_all_by_name('Item Qui Esse')
+  #   assert_equal results[0].id, 1
+  #
+  #   results = item_repository.find_all_by_name('Item Qui Esse')
+  #   refute_equal results[0].id, 2
+  # end
+  #
+  # def test_it_finds_all_by_unit_price
+  #   results = item_repository.find_all_by_unit_price(BigDecimal('751.07'))
+  #   assert_equal results[0].id, 1
+  #
+  #   results = item_repository.find_all_by_unit_price(BigDecimal('751.07'))
+  #   refute_equal results[0].id, 2
+  # end
+  #
+  # def test_it_finds_all_by_merchant_id
+  #   results = item_repository.find_all_by_merchant_id(1)
+  #   assert_equal results[0].id, 1
+  #
+  #   results = item_repository.find_all_by_merchant_id(1)
+  #   refute_equal results[0].id, 2
+  # end
 
-  def test_it_finds_by_id
-    results = item_repository.find_by_id(1)
-    assert_equal BigDecimal('751.07'), results.unit_price
-  end
-
-  def test_it_finds_by_name
-    results = item_repository.find_by_name('Item Qui Esse')
-    assert_equal results.id, 1
-
-    results = item_repository.find_by_name('Item Qui Esse')
-    refute_equal results.id, 2
-  end
-
-  def test_it_finds_by_unit_price
-    results = item_repository.find_by_unit_price(BigDecimal('751.07'))
-    assert_equal results.id, 1
-
-    results = item_repository.find_by_unit_price(BigDecimal('751.07'))
-    refute_equal results.id, 2
-  end
-
-  def test_it_finds_by_merchant_id
-    results = item_repository.find_by_merchant_id(1)
-    assert_equal results.id, 1
-
-    results = item_repository.find_by_merchant_id(1)
-    refute_equal results.id, 2
-  end
-
-  def test_it_finds_all_by_name
-    results = item_repository.find_all_by_name('Item Qui Esse')
-    assert_equal results[0].id, 1
-
-    results = item_repository.find_all_by_name('Item Qui Esse')
-    refute_equal results[0].id, 2
-  end
-
-  def test_it_finds_all_by_unit_price
-    results = item_repository.find_all_by_unit_price(BigDecimal('751.07'))
-    assert_equal results[0].id, 1
-
-    results = item_repository.find_all_by_unit_price(BigDecimal('751.07'))
-    refute_equal results[0].id, 2
-  end
-
-  def test_it_finds_all_by_merchant_id
-    results = item_repository.find_all_by_merchant_id(1)
-    assert_equal results[0].id, 1
-
-    results = item_repository.find_all_by_merchant_id(1)
-    refute_equal results[0].id, 2
-  end
-
-  def test_finds_most_sold_item
+  def test_finds_most_sold_items
     assert item_repository.most_items
-    assert Item, item_repository.most_items.class
-    assert_equal 'Item Qui Esse', item_repository.most_items.name # at first just get returning one
+    assert Array, item_repository.most_items.class
+    # puts item_repository.most_items
+    assert item_repository.most_items(37)[1].name   == "Item Nam Magnam"
+    assert item_repository.most_items(37).last.name == "Item Ut Quaerat"
+
+    # assert_equal 'Item Qui Esse', item_repository.most_items[0].name
   end
 end

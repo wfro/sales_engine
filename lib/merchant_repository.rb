@@ -38,6 +38,7 @@ class MerchantRepository
   def find_all_by_name(match)
     merchants.select { |merchant| merchant.name.to_s.downcase == match.downcase }
   end
+<<<<<<< HEAD
 
   def most_revenue(x)
     merchants.sort_by {|m| m.revenue}.reverse[0..x-1]
@@ -58,6 +59,7 @@ class MerchantRepository
     merchants.inject(0) {|sum, merchant| sum += merchant.revenue(date)}
     # returns the total revenue for that date across all merchants
   end
+
 
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"

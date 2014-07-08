@@ -53,18 +53,32 @@ class ItemRepository
   #   # returns the top x item instances ranked by total revenue generated
   # end
   #
-  def most_items(x=nil)
-    # invoice_items = engine.invoice_item_repository.invoice_items
-    # hash = invoice_items.group_by { |invoice_item| invoice_item.item }
-    # hash.max_by { |k, v| v.length }
-    hash = {}
-    items.each { |item| hash[item] = 0 }
-    items.each { |item| hash[item] += item.invoice_items.length }
+  def most_items(x=1)
+    # WIP
+    hash = Hash.new(0)
 
-    hash.max_by { |k, v| v }[0]
+    items.each do |item|
+      item.invoice_items.each do |invoice_item|
+        hash[item] += invoice_item.quantity
+      end
+    end
+    results = hash.sort_by { |k, v| v }.reverse
+    # items   = results.map { |result| result[0] }
+    # items[0..37]
+    # print items[0].class
+    # print items
+    # most_times = []
+    # x.times do |i|
+    #   unless most_times.include?(results[i][0])
+    #     most_times << results[i][0]
+    #   end
+    # end
+    # puts most_times.length
+    # most_times.each {|result| puts "id #{most_times.index(result)} name #{result.name}" }
+    # most_times
     # returns the top x item instances ranked by total number sold
   end
-  
+
   def inspect
     "#<#{self.class} #{@items.size} rows>"
   end
