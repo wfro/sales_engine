@@ -28,6 +28,10 @@ class Item
     engine.merchant_repository.find_by_id(merchant_id)
   end
 
+  # def revenue
+  #
+  # end
+
   # def best_day
   #   # returns the date with the most sales for the given item using the invoice date
   # end

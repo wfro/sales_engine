@@ -19,12 +19,30 @@ class Merchant
     engine.item_repository.find_all_by_merchant_id(id)
   end
 
+  def items_sold
+    items.each do |item|
+      item
+    end
+  end
+
+# remove items that have not been sold
+# multiply items by invoice_item.quantity
+
+
   def invoices
     engine.invoice_repository.find_all_by_merchant_id(id)
   end
 
   def invoice_items
-    invoices.collect { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
+    invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
+  end
+
+  def paid_invoices
+    invoices.select { |invoice| invoice.transactions.any? { |t| t.result == 'success' } }
+  end
+
+  def paid_invoice_items
+    paid_invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
   end
 
   def revenue(date=nil)
@@ -34,7 +52,7 @@ class Merchant
         result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
       end
     else
-      invoice_items.inject(0) do |result, invoice_item|
+      paid_invoice_items.inject(0) do |result, invoice_item|
         result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
       end
     end
