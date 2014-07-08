@@ -4,7 +4,7 @@ class CustomerTest < Minitest::Test
   attr_reader :customer
 
   def setup
-    engine = SalesEngine.new('./data')
+    engine = SalesEngine.new('./test/fixtures')
     @customer = engine.customer_repository.customers[0]
   end
 
@@ -35,6 +35,7 @@ class CustomerTest < Minitest::Test
   def test_it_retrieves_favorite_merchant
     assert customer.respond_to? :favorite_merchant
     assert customer.favorite_merchant
+    # puts customer.favorite_merchant.name
     assert_equal Merchant, customer.favorite_merchant.class
     assert_equal "Balistreri, Schaefer and Kshlerin", customer.favorite_merchant.name
   end

@@ -46,7 +46,7 @@ class MerchantTest < Minitest::Test
   def test_it_finds_revenue_by_date
     date =  Date.parse("27 Mar 2012")
     puts merchant.revenue(date)
-    # assert_equal BigDecimal('1856.94'), merchant.revenue(date)
+    assert_equal BigDecimal('1856.94'), merchant.revenue(date)
   end
 
   def test_it_finds_favorite_customer

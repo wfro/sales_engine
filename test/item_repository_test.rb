@@ -65,4 +65,10 @@ class ItemRepositoryTest < Minitest::Test
     results = item_repository.find_all_by_merchant_id(1)
     refute_equal results[0].id, 2
   end
+
+  def test_finds_most_sold_item
+    assert item_repository.most_items
+    assert Item, item_repository.most_items.class
+    assert_equal 'Item Qui Esse', item_repository.most_items.name # at first just get returning one
+  end
 end
