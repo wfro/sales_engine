@@ -34,6 +34,11 @@ class Invoice
     end
   end
 
+  def amount
+    invoice_items.inject(0) { |result, invoice_item| result +
+      (BigDecimal(invoice_item.quantity) * invoice_item.unit_price) }
+  end
+
   def customer
     engine.customer_repository.find_by_id(customer_id)
   end

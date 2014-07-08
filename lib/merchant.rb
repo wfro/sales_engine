@@ -46,15 +46,12 @@ class Merchant
   end
 
   def revenue(date=nil)
+    puts date
     if date
-      items_by_date = invoice_items.select { |invoice_item| invoice_item.created_at == date }
-      items_by_date.flatten.inject(0) do |result, invoice_item|
-        result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
-      end
+      by_date = paid_invoices.select { |invoice| invoice.updated_at == date }
+      by_date.inject(0) { |result, invoice| result + invoice.amount }
     else
-      paid_invoice_items.inject(0) do |result, invoice_item|
-        result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
-      end
+      paid_invoices.inject(0) { |result, invoice| result + invoice.amount}
     end
   end
 

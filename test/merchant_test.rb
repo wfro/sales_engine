@@ -65,4 +65,10 @@ class MerchantTest < Minitest::Test
     merchant = engine.merchant_repository.find_by_name "Dicki-Bednar"
     assert_equal BigDecimal.new("1148393.74"), merchant.revenue
   end
+
+  def test_find_revenue_by_date_harness
+    merchant = engine.merchant_repository.find_by_name "Willms and Sons"
+    date = Date.parse("Fri, 09 Mar 2012")
+    assert_equal BigDecimal.new("8373.29"), merchant.revenue(date)
+  end
 end
