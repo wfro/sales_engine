@@ -25,16 +25,18 @@ class Merchant
     end
   end
 
-# remove items that have not been sold
-# multiply items by invoice_item.quantity
-
-
   def invoices
     engine.invoice_repository.find_all_by_merchant_id(id)
   end
 
   def invoice_items
-    invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
+    invoice_items = []
+    invoices.each do |invoice|
+      if invoice.successful?
+        invoice_items << engine.invoice_item_repository.find_all_by_invoice_id(invoice.id)
+      end
+    end
+    invoice_items.flatten!
   end
 
   def paid_invoices
@@ -46,13 +48,16 @@ class Merchant
   end
 
   def revenue(date=nil)
-    puts date
     if date
       by_date = paid_invoices.select { |invoice| invoice.updated_at == date }
       by_date.inject(0) { |result, invoice| result + invoice.amount }
     else
       paid_invoices.inject(0) { |result, invoice| result + invoice.amount}
     end
+  end
+
+  def sold_items
+    invoice_items.inject(0) {|sum, item| sum += item.quantity}
   end
 
   def favorite_customer
@@ -69,7 +74,13 @@ class Merchant
     all_customers.group_by { |item| item }.values.max_by(&:size).first
   end
 
-  # def customers_with_pending_invoices
-  #   # returns a collection of Customer instances which have pending (unpaid) invoices
-  # end
+  def customers_with_pending_invoices
+    unsuccessful_invoices = []
+    invoices.each do |invoice|
+      unsuccessful_invoices << invoice if invoice.successful? == false
+    end
+    unsuccessful_invoices.map {|invoice| engine.customer_repository.find_all_by_id(invoice.customer_id) }.flatten!
+
+    # returns a collection of Customer instances which have pending (unpaid) invoices
+  end
 end

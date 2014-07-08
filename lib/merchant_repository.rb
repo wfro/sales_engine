@@ -38,17 +38,20 @@ class MerchantRepository
   def find_all_by_name(match)
     merchants.select { |merchant| merchant.name.to_s.downcase == match.downcase }
   end
-  # def most_revenue(X)
-  #   # returns the top x merchant instances ranked by total revenue
-  # end
-  #
-  # def most_items(x)
-  #   # returns the top x merchant instances ranked by total number of items sold
-  # end
-  #
-  # def revenue(date)
-  #   # returns the total revenue for that date across all merchants
-  # end
+
+  def most_revenue(x)
+    merchants.sort_by {|m| m.revenue}.reverse[0..x-1]
+    # returns the top x merchant instances ranked by total revenue
+  end
+
+  def most_items(x=1)
+    merchants.sort_by {|m| m.sold_items}.reverse[0..x-1]
+  end
+
+  def revenue(date)
+    merchants.inject(0) {|sum, merchant| sum += merchant.revenue(date)}
+    # returns the total revenue for that date across all merchants
+  end
 
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"

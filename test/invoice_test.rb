@@ -50,4 +50,9 @@ class InvoiceTest < Minitest::Test
     assert invoice.merchant
     assert invoice.merchant.id == 26
   end
+  
+  def test_it_finds_successful_invoices
+    assert invoice.respond_to? :successful?
+    assert_equal true, invoice.successful?
+  end
 end
