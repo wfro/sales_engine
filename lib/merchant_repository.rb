@@ -49,4 +49,8 @@ class MerchantRepository
   # def revenue(date)
   #   # returns the total revenue for that date across all merchants
   # end
+
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
 end
