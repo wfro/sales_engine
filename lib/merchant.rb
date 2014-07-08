@@ -24,7 +24,15 @@ class Merchant
   end
 
   def invoice_items
-    invoices.collect { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
+    invoice_items = []
+    invoices.each do |invoice|
+      if invoice.successful?
+        invoice_items << engine.invoice_item_repository.find_all_by_invoice_id(invoice.id)
+      end
+    end
+    invoice_items.flatten!
+    
+    # invoices.collect { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
   end
 
   def revenue(date=nil)
@@ -38,6 +46,10 @@ class Merchant
         result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
       end
     end
+  end
+
+  def sold_items
+    invoice_items.inject(0) {|sum, item| sum += item.quantity}
   end
 
   def favorite_customer
@@ -54,7 +66,16 @@ class Merchant
     all_customers.group_by { |item| item }.values.max_by(&:size).first
   end
 
-  # def customers_with_pending_invoices
-  #   # returns a collection of Customer instances which have pending (unpaid) invoices
-  # end
+  def customers_with_pending_invoices
+    unsuccessful_invoices = []
+    invoices.each do |invoice|
+      unsuccessful_invoices << invoice if invoice.successful? == false
+    end
+    deadbeat_customers = []
+    unsuccessful_invoices.each do |invoice|
+      deadbeat_customers << engine.customer_repository.find_all_by_id(invoice.customer_id)
+    end
+    deadbeat_customers
+    # returns a collection of Customer instances which have pending (unpaid) invoices
+  end
 end

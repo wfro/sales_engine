@@ -64,4 +64,8 @@ class ItemRepository
     hash.max_by { |k, v| v }[0]
     # returns the top x item instances ranked by total number sold
   end
+  
+  def inspect
+    "#<#{self.class} #{@items.size} rows>"
+  end
 end

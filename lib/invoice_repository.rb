@@ -54,4 +54,8 @@ class InvoiceRepository
   def find_all_by_status(match)
     invoices.select { |invoice| invoice.status.downcase == match.downcase }
   end
+
+  def inspect
+    "#<#{self.class} #{@invoices.size} rows>"
+  end
 end
