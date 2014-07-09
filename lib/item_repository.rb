@@ -58,7 +58,7 @@ class ItemRepository
     hash = Hash.new(0)
 
     items.each do |item|
-      item.invoice_items.each do |invoice_item|
+      item.paid_invoice_items.each do |invoice_item|
         hash[item] += invoice_item.quantity
       end
     end

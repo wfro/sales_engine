@@ -4,7 +4,7 @@ class ItemRepositoryTest < Minitest::Test
   attr_reader :item_repository
 
   def setup
-    engine = SalesEngine.new('./data')
+    engine = SalesEngine.new('./test/fixtures')
     @item_repository = engine.item_repository
   end
 
@@ -68,10 +68,6 @@ class ItemRepositoryTest < Minitest::Test
   def test_finds_most_sold_items
     assert item_repository.most_items
     assert Array, item_repository.most_items.class
-    most = item_repository.most_items(37)
-
-    assert_equal "Item Nam Magnam", most[1].name
-    assert_equal "Item Ut Quaerat", most.last.name
-    # assert_equal 'Item Qui Esse', item_repository.most_items[0].name
+    assert_equal 'Item Qui Esse', item_repository.most_items[0].name
   end
 end

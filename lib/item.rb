@@ -24,6 +24,10 @@ class Item
     engine.invoice_item_repository.find_all_by_item_id(id)
   end
 
+  def paid_invoice_items
+    invoice_items.select { |i| i.invoice.successful? }
+  end
+
   def merchant
     engine.merchant_repository.find_by_id(merchant_id)
   end
