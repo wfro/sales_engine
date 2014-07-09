@@ -1,6 +1,7 @@
 require 'bigdecimal'
 require 'date'
 
+
 class Item
   attr_reader :id,
               :name,
@@ -8,7 +9,8 @@ class Item
               :merchant_id,
               :created_at,
               :updated_at,
-              :engine
+              :engine,
+              :paid_invoice_items
 
   def initialize(data, item_repo_ref)
     @id            = data[:id].to_i
@@ -25,7 +27,7 @@ class Item
   end
 
   def paid_invoice_items
-    invoice_items.select { |i| i.invoice.successful? }
+    @paid_invoice_items ||= invoice_items.select { |i| i.invoice.successful? }
   end
 
   def merchant
@@ -33,16 +35,18 @@ class Item
   end
 
   def revenue
-    invoice_items.inject(0) do |sum, invoice_item|
-      if invoice_item.invoice.successful?
-        sum += (invoice_item.unit_price * invoice_item.quantity)
-      else
-        sum
-      end
-    end
+    paid_invoice_items.inject(0) { |sum, i| sum += (i.unit_price * i.quantity) }
   end
 
-  # def best_day
-  #   # returns the date with the most sales for the given item using the invoice date
-  # end
+  def best_day
+    daily_invoice_items = paid_invoice_items.group_by { |invoice_item| invoice_item.invoice.updated_at }
+    daily_invoice_items.values.flatten!
+    daily_invoice_items.each do |key, value|
+      daily_invoice_items[key] = value.inject(0) { |sum, invoice_item| sum + invoice_item.quantity }
+    end
+    best_day = daily_invoice_items.max_by { |k, v| v }
+    best_day[0]
+    
+    # returns the date with the most sales for the given item using the invoice date
+  end
 end

@@ -26,8 +26,6 @@ class Customer
   end
 
   def favorite_merchant
-    # look into possibly using a hash to search results
-    # only add merchant once, add 1 to value for each successful transaction
     merchants = transactions.map { |t| t.merchant if t.result == 'success' }
     merchants.group_by { |item| item }.values.max_by(&:size).first
   end

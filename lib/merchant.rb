@@ -30,22 +30,16 @@ class Merchant
   end
 
   def invoice_items
-    invoice_items = []
-    invoices.each do |invoice|
-      if invoice.successful?
-        invoice_items << engine.invoice_item_repository.find_all_by_invoice_id(invoice.id)
-      end
-    end
-    invoice_items.flatten!
+    invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
   end
 
   def paid_invoices
     invoices.select { |invoice| invoice.transactions.any? { |t| t.result == 'success' } }
   end
 
-  # def paid_invoice_items
-  #   paid_invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
-  # end
+  def paid_invoice_items
+    paid_invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
+  end
 
   def revenue(date=nil)
     if date
@@ -57,17 +51,16 @@ class Merchant
   end
 
   def sold_items
-    invoice_items.inject(0) {|sum, item| sum += item.quantity}
+    paid_invoice_items.inject(0) {|sum, item| sum += item.quantity}
+  end
+
+  def customers
+    invoices.map { |invoice| invoice.customer }
   end
 
   def favorite_customer
-    customers = invoices.map { |invoice| invoice.customer }
-    all_customers = customers.each do |customer|
-      customer.transactions.map do |transaction|
-        customer if transaction.result == 'success'
-      end
-    end
-    all_customers.group_by { |item| item }.values.max_by(&:size).first
+    upstanding_customers = customers.select { |customer| customer.transactions.any? { |t| t.result == 'success'} }
+    upstanding_customers.group_by { |item| item }.values.max_by(&:size).first
   end
 
   def customers_with_pending_invoices
