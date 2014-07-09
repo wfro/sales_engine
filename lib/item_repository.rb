@@ -66,7 +66,6 @@ class ItemRepository
     results = hash.sort_by { |k, v| v }.reverse
     items = results.map { |result| result[0] }
     items[0..x-1]
-    # returns the top x item instances ranked by total number sold
   end
 
   def inspect

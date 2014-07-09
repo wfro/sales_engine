@@ -29,5 +29,4 @@ class Customer
     merchants = transactions.map { |t| t.merchant if t.result == 'success' }
     merchants.group_by { |item| item }.values.max_by(&:size).first
   end
-
 end

@@ -49,10 +49,5 @@ class Invoice
   
   def successful?
     transactions.any? {|t| t.result == 'success'} ? true : false
-    # if transactions.any? {|t| t.result == 'success'}
-    #   true
-    # else
-    #   false
-    # end
   end
 end

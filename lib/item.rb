@@ -1,7 +1,6 @@
 require 'bigdecimal'
 require 'date'
 
-
 class Item
   attr_reader :id,
               :name,
