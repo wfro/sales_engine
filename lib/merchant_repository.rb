@@ -40,17 +40,15 @@ class MerchantRepository
   end
 
   def most_revenue(x)
-    merchants.sort_by {|m| m.revenue}.reverse[0..x-1]
-    # returns the top x merchant instances ranked by total revenue
+    merchants.sort_by { |m| m.revenue }.reverse[0..x-1]
   end
 
   def most_items(x=1)
-    merchants.sort_by {|m| m.sold_items}.reverse[0..x-1]
+    merchants.sort_by { |m| m.sold_items }.reverse[0..x-1]
   end
 
   def revenue(date)
-    merchants.inject(0) {|sum, merchant| sum += merchant.revenue(date)}
-    # returns the total revenue for that date across all merchants
+    merchants.inject(0) { |sum, merchant| sum += merchant.revenue(date) }
   end
 
   def inspect
