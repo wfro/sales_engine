@@ -54,7 +54,6 @@ class ItemRepository
   # end
   #
   def most_items(x=1)
-    # WIP
     hash = Hash.new(0)
 
     items.each do |item|
@@ -62,20 +61,10 @@ class ItemRepository
         hash[item] += invoice_item.quantity
       end
     end
+    
     results = hash.sort_by { |k, v| v }.reverse
-    # items   = results.map { |result| result[0] }
-    # items[0..37]
-    # print items[0].class
-    # print items
-    # most_times = []
-    # x.times do |i|
-    #   unless most_times.include?(results[i][0])
-    #     most_times << results[i][0]
-    #   end
-    # end
-    # puts most_times.length
-    # most_times.each {|result| puts "id #{most_times.index(result)} name #{result.name}" }
-    # most_times
+    items = results.map { |result| result[0] }
+    items[0..x-1]
     # returns the top x item instances ranked by total number sold
   end
 

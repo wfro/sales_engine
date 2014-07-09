@@ -68,10 +68,10 @@ class ItemRepositoryTest < Minitest::Test
   def test_finds_most_sold_items
     assert item_repository.most_items
     assert Array, item_repository.most_items.class
-    # puts item_repository.most_items
-    assert item_repository.most_items(37)[1].name   == "Item Nam Magnam"
-    assert item_repository.most_items(37).last.name == "Item Ut Quaerat"
+    most = item_repository.most_items(37)
 
+    assert_equal "Item Nam Magnam", most[1].name
+    assert_equal "Item Ut Quaerat", most.last.name
     # assert_equal 'Item Qui Esse', item_repository.most_items[0].name
   end
 end
