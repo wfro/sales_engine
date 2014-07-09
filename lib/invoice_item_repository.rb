@@ -15,6 +15,22 @@ class InvoiceItemRepository
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
     @invoice_items = rows.map { |row| InvoiceItem.new(row, self) }
   end
+  
+  def create(items, invoice_id, time)
+    items.each do |item|
+      new_invoice_item = {}
+
+      new_invoice_item[:id] = all.length + 1
+      new_invoice_item[:item_id] = item.id
+      new_invoice_item[:invoice_id] = invoice_id
+      new_invoice_item[:quantity] = 1
+      new_invoice_item[:unit_price] = item.unit_price
+      new_invoice_item[:created_at] = time
+      new_invoice_item[:updated_at] = time
+      
+      all << InvoiceItem.new(new_invoice_item, self)
+    end
+  end
 
   def all
     @invoice_items

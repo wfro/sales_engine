@@ -1,4 +1,5 @@
 require_relative 'invoice'
+require 'time'
 
 class InvoiceRepository
   attr_reader :invoices,
@@ -13,6 +14,30 @@ class InvoiceRepository
   def from_csv(filename)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
     @invoices = rows.map { |row| Invoice.new(row, self) }
+  end
+
+  def create(invoice_data)
+
+    new_invoice = {}
+
+    new_invoice[:id]          = all.length + 1
+    new_invoice[:customer_id] = invoice_data[:customer].id
+    new_invoice[:merchant_id] = invoice_data[:merchant].id
+    new_invoice[:status]      = invoice_data[:status]
+    new_invoice[:created_at]  = Time.new.to_s
+    new_invoice[:updated_at]  = Time.new.to_s
+
+    engine.invoice_item_repository.create(invoice_data[:items], new_invoice[:id], new_invoice[:created_at])
+
+    invoice = Invoice.new(new_invoice, self)
+    all << invoice
+    invoice
+  end
+
+  # invoice = invoice_repository.create(customer: customer, merchant: merchant, status: "shipped", xitems: [item1, item2, item3])
+  
+  def new_invoice_item(items, id, time)
+    engine.invoice_item_repository.create(items, id, time)
   end
 
   def all
