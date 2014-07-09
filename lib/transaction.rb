@@ -1,4 +1,4 @@
-require "date"
+require 'date'
 
 class Transaction
   attr_reader :id,

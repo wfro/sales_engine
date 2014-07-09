@@ -1,4 +1,5 @@
 require 'csv'
+require 'time'
 require_relative 'transaction'
 
 class TransactionRepository
@@ -13,6 +14,16 @@ class TransactionRepository
   def from_csv(filename)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
     @transactions = rows.map { |row| Transaction.new(row, self) }
+  end
+  
+  def create(charge_data)
+    new_transaction = charge_data
+
+    new_transaction[:id]         = all.length + 1
+    new_transaction[:created_at] = Time.new.to_s
+    new_transaction[:updated_at] = Time.new.to_s
+
+    all << Transaction.new(new_transaction, self)
   end
 
   def all

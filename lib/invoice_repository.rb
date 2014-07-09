@@ -17,7 +17,6 @@ class InvoiceRepository
   end
 
   def create(invoice_data)
-
     new_invoice = {}
 
     new_invoice[:id]          = all.length + 1
@@ -34,8 +33,6 @@ class InvoiceRepository
     invoice
   end
 
-  # invoice = invoice_repository.create(customer: customer, merchant: merchant, status: "shipped", xitems: [item1, item2, item3])
-  
   def new_invoice_item(items, id, time)
     engine.invoice_item_repository.create(items, id, time)
   end

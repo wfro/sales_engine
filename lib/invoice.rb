@@ -19,6 +19,10 @@ class Invoice
     @engine      = invoice_repo_ref.engine
   end
 
+  def charge(charge_data)
+    charge_data[:invoice_id] = id
+    engine.transaction_repository.create(charge_data)
+  end
 
   def transactions
     engine.transaction_repository.find_all_by_invoice_id(id)
