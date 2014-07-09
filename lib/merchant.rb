@@ -64,10 +64,6 @@ class Merchant
   end
 
   def customers_with_pending_invoices
-    unsuccessful_invoices = []
-    invoices.each do |invoice|
-      unsuccessful_invoices << invoice if invoice.successful? == false
-    end
-    unsuccessful_invoices.map {|invoice| engine.customer_repository.find_all_by_id(invoice.customer_id) }.flatten!
+    invoices.reject { |i| i.successful? }.map { |invoice| engine.customer_repository.find_all_by_id(invoice.customer_id) }.flatten
   end
 end
