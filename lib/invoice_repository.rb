@@ -26,7 +26,9 @@ class InvoiceRepository
     new_invoice[:created_at]  = Time.new.to_s
     new_invoice[:updated_at]  = Time.new.to_s
 
-    engine.invoice_item_repository.create(invoice_data[:items], new_invoice[:id], new_invoice[:created_at])
+    engine.invoice_item_repository.create(
+      invoice_data[:items], new_invoice[:id], new_invoice[:created_at]
+    )
 
     invoice = Invoice.new(new_invoice, self)
     all << invoice

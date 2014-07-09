@@ -28,7 +28,9 @@ class MerchantRepository
   end
 
   def find_by_name(match)
-    merchants.detect { |merchant| merchant.name.to_s.downcase == match.downcase }
+    merchants.detect do |merchant|
+      merchant.name.to_s.downcase == match.downcase
+    end
   end
 
   def find_all_by_id(match)
@@ -36,7 +38,9 @@ class MerchantRepository
   end
 
   def find_all_by_name(match)
-    merchants.select { |merchant| merchant.name.to_s.downcase == match.downcase }
+    merchants.select do |merchant|
+      merchant.name.to_s.downcase == match.downcase
+    end
   end
 
   def most_revenue(x)

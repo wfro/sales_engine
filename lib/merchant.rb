@@ -24,15 +24,21 @@ class Merchant
   end
 
   def invoice_items
-    invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
+    invoices.map do |invoice|
+      engine.invoice_item_repository.find_all_by_invoice_id(invoice.id)
+    end.flatten
   end
 
   def paid_invoices
-    invoices.select { |invoice| invoice.transactions.any? { |t| t.result == 'success' } }
+    invoices.select do |invoice|
+      invoice.transactions.any? { |t| t.result == 'success' }
+    end
   end
 
   def paid_invoice_items
-    paid_invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
+    paid_invoices.map do |invoice|
+      engine.invoice_item_repository.find_all_by_invoice_id(invoice.id)
+    end.flatten
   end
 
   def revenue(date=nil)
@@ -53,11 +59,15 @@ class Merchant
   end
 
   def favorite_customer
-    upstanding_customers = customers.select { |customer| customer.transactions.any? { |t| t.result == 'success'} }
+    upstanding_customers = customers.select do |customer|
+      customer.transactions.any? { |t| t.result == 'success' }
+    end
     upstanding_customers.group_by { |item| item }.values.max_by(&:size).first
   end
 
   def customers_with_pending_invoices
-    invoices.reject { |i| i.successful? }.map { |invoice| engine.customer_repository.find_all_by_id(invoice.customer_id) }.flatten
+    invoices.reject { |i| i.successful? }.map do |invoice|
+      engine.customer_repository.find_all_by_id(invoice.customer_id)
+    end.flatten
   end
 end
