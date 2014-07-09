@@ -28,7 +28,7 @@ class Transaction
   def merchant
     invoice.merchant
   end
-  
+
   def successful?
     true if result == 'success'
   end

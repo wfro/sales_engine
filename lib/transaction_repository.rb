@@ -15,7 +15,7 @@ class TransactionRepository
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
     @transactions = rows.map { |row| Transaction.new(row, self) }
   end
-  
+
   def create(charge_data)
     new_transaction = charge_data
 

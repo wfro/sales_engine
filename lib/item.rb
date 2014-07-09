@@ -45,7 +45,7 @@ class Item
     end
     best_day = daily_invoice_items.max_by { |k, v| v }
     best_day[0]
-    
+
     # returns the date with the most sales for the given item using the invoice date
   end
 end

@@ -50,7 +50,7 @@ class Invoice
   def merchant
     engine.merchant_repository.find_by_id(merchant_id)
   end
-  
+
   def successful?
     transactions.any? {|t| t.result == 'success'} ? true : false
   end
