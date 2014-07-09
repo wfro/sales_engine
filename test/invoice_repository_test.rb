@@ -1,10 +1,10 @@
 require './test/test_helper'
 
 class InvoiceRepositoryTest < Minitest::Test
-  attr_reader :invoice_repository
+  attr_reader :invoice_repository, :engine
 
   def setup
-    engine = SalesEngine.new('./test/fixtures')
+    @engine = SalesEngine.new('./test/fixtures')
     @invoice_repository = engine.invoice_repository
   end
 
@@ -55,5 +55,17 @@ class InvoiceRepositoryTest < Minitest::Test
   def test_find_all_by_status
     results = invoice_repository.find_all_by_status('shipped')
     assert_equal 26, results[0].merchant_id
+  end
+
+  def test_it_creates_new_invoices
+    previous_length = invoice_repository.invoices.length
+    customer = engine.customer_repository.find_by_id(1)
+    merchant = engine.merchant_repository.find_by_id(2)
+    items    = (1..3).map { engine.item_repository.random }
+    invoice  = engine.invoice_repository.create(customer: customer, merchant: merchant, items: items)
+
+    assert_equal previous_length + 1, invoice_repository.invoices.length
+    assert_equal invoice.merchant_id, merchant.id
+    assert_equal invoice.customer.id, customer.id
   end
 end
