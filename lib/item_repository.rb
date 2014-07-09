@@ -49,10 +49,11 @@ class ItemRepository
   def find_all_by_merchant_id(match)
     items.select { |item| item.merchant_id == match }
   end
-  # def most_revenue(x)
-  #   # returns the top x item instances ranked by total revenue generated
-  # end
-  #
+
+  def most_revenue(x)
+    items.sort_by { |i| i.revenue }.reverse[0..x-1]
+  end
+
   def most_items(x=1)
     hash = Hash.new(0)
 
@@ -61,7 +62,7 @@ class ItemRepository
         hash[item] += invoice_item.quantity
       end
     end
-    
+
     results = hash.sort_by { |k, v| v }.reverse
     items = results.map { |result| result[0] }
     items[0..x-1]

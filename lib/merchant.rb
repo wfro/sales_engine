@@ -43,9 +43,9 @@ class Merchant
     invoices.select { |invoice| invoice.transactions.any? { |t| t.result == 'success' } }
   end
 
-  def paid_invoice_items
-    paid_invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
-  end
+  # def paid_invoice_items
+  #   paid_invoices.map { |invoice| engine.invoice_item_repository.find_all_by_invoice_id(invoice.id) }.flatten
+  # end
 
   def revenue(date=nil)
     if date
@@ -61,10 +61,6 @@ class Merchant
   end
 
   def favorite_customer
-    # customers = invoices.map { |invoice| invoice.customer }
-    # customer_hash = {}
-    # customers.each { |customer| customer_hash[customer] = customer.transactions.length }
-    # customer_hash.max_by{ |k, v| v }[0]
     customers = invoices.map { |invoice| invoice.customer }
     all_customers = customers.each do |customer|
       customer.transactions.map do |transaction|
@@ -80,7 +76,5 @@ class Merchant
       unsuccessful_invoices << invoice if invoice.successful? == false
     end
     unsuccessful_invoices.map {|invoice| engine.customer_repository.find_all_by_id(invoice.customer_id) }.flatten!
-
-    # returns a collection of Customer instances which have pending (unpaid) invoices
   end
 end
