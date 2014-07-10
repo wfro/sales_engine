@@ -52,6 +52,15 @@ class CustomerRepository
     end
   end
 
+  def most_items
+    customers.max_by { |customer| customer.items_bought }
+  end
+
+  def most_revenue
+    customers.max_by { |customer| customer.value }
+
+  end
+
   def inspect
     "#<#{self.class} #{@customers.size} rows>"
   end

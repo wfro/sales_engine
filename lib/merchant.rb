@@ -51,7 +51,7 @@ class Merchant
   end
 
   def sold_items
-    paid_invoice_items.inject(0) {|sum, item| sum += item.quantity}
+    paid_invoice_items.inject(0) { |sum, item| sum += item.quantity }
   end
 
   def customers

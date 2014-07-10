@@ -81,6 +81,12 @@ class InvoiceRepository
     invoices.select { |invoice| invoice.status.downcase == match.downcase }
   end
 
+  def pending
+    invoices.reject { |i| i.successful? }.map do |invoice|
+      engine.invoice_repository.find_all_by_id(invoice = invoice.id)
+    end.flatten
+  end
+
   def inspect
     "#<#{self.class} #{@invoices.size} rows>"
   end
