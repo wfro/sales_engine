@@ -11,14 +11,14 @@ class Item
               :engine,
               :paid_invoice_items
 
-  def initialize(data, item_repo_ref)
+  def initialize(data, engine)
     @id            = data[:id].to_i
     @name          = data[:name]
     @unit_price    = BigDecimal.new(data[:unit_price].to_i) / BigDecimal(100)
     @merchant_id   = data[:merchant_id].to_i
     @created_at    = Date.parse(data[:created_at])
     @updated_at    = Date.parse(data[:updated_at])
-    @engine        = item_repo_ref.engine
+    @engine        = engine
   end
 
   def invoice_items
@@ -38,14 +38,16 @@ class Item
   end
 
   def best_day
-    daily_invoice_items = paid_invoice_items.group_by { |invoice_item| invoice_item.invoice.updated_at }
+    daily_invoice_items = paid_invoice_items.group_by do
+      |invoice_item| invoice_item.invoice.updated_at
+    end
     daily_invoice_items.values.flatten!
     daily_invoice_items.each do |key, value|
-      daily_invoice_items[key] = value.inject(0) { |sum, invoice_item| sum + invoice_item.quantity }
+      daily_invoice_items[key] = value.inject(0) do
+        |sum, invoice_item| sum + invoice_item.quantity
+      end
     end
     best_day = daily_invoice_items.max_by { |k, v| v }
     best_day[0]
-
-    # returns the date with the most sales for the given item using the invoice date
   end
 end

@@ -13,7 +13,7 @@ class TransactionRepository
 
   def from_csv(filename)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    @transactions = rows.map { |row| Transaction.new(row, self) }
+    @transactions = rows.map { |row| Transaction.new(row, engine) }
   end
 
   def create(charge_data)
@@ -23,7 +23,7 @@ class TransactionRepository
     new_transaction[:created_at] = Time.new.to_s
     new_transaction[:updated_at] = Time.new.to_s
 
-    all << Transaction.new(new_transaction, self)
+    all << Transaction.new(new_transaction, engine)
   end
 
   def all

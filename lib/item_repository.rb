@@ -1,17 +1,15 @@
 require_relative 'item'
 
 class ItemRepository
-  attr_reader :items,
-              :engine
+  attr_reader :items
 
   def initialize(filename, engine)
-    @engine = engine
-    from_csv(filename)
+    from_csv(filename, engine)
   end
 
-  def from_csv(filename)
+  def from_csv(filename, engine)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    @items = rows.map { |row| Item.new(row, self) }
+    @items = rows.map { |row| Item.new(row, engine) }
   end
 
   def all

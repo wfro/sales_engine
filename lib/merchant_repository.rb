@@ -2,17 +2,15 @@ require 'csv'
 require_relative 'merchant'
 
 class MerchantRepository
-  attr_reader :merchants,
-              :engine
+  attr_reader :merchants
 
   def initialize(filename, engine)
-    @engine = engine
-    from_csv(filename)
+    from_csv(filename, engine)
   end
 
-  def from_csv(filename)
+  def from_csv(filename, engine)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    @merchants = rows.map {|row| Merchant.new(row, self)}
+    @merchants = rows.map {|row| Merchant.new(row, engine)}
   end
 
   def all
@@ -28,7 +26,9 @@ class MerchantRepository
   end
 
   def find_by_name(match)
-    merchants.detect { |merchant| merchant.name.to_s.downcase == match.downcase }
+    merchants.detect do |merchant|
+      merchant.name.to_s.downcase == match.downcase
+    end
   end
 
   def find_all_by_id(match)
@@ -36,7 +36,9 @@ class MerchantRepository
   end
 
   def find_all_by_name(match)
-    merchants.select { |merchant| merchant.name.to_s.downcase == match.downcase }
+    merchants.select do |merchant|
+      merchant.name.to_s.downcase == match.downcase
+    end
   end
 
   def most_revenue(x)

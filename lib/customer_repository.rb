@@ -1,17 +1,15 @@
 require_relative 'customer'
 
 class CustomerRepository
-  attr_reader :customers,
-              :engine
+  attr_reader :customers
 
   def initialize(filename, engine)
-    @engine = engine
-    from_csv(filename)
+    from_csv(filename, engine)
   end
 
-  def from_csv(filename)
+  def from_csv(filename, engine)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    @customers = rows.map {|row| Customer.new(row, self)}
+    @customers = rows.map {|row| Customer.new(row, engine)}
   end
 
   def all
@@ -27,11 +25,15 @@ class CustomerRepository
   end
 
   def find_by_first_name(match)
-    customers.detect { |customer| customer.first_name.downcase == match.downcase }
+    customers.detect do |customer|
+      customer.first_name.downcase == match.downcase
+    end
   end
 
   def find_by_last_name(match)
-    customers.detect { |customer| customer.last_name.downcase == match.downcase }
+    customers.detect do |customer|
+      customer.last_name.downcase == match.downcase
+    end
   end
 
   def find_all_by_id(match)
@@ -39,11 +41,15 @@ class CustomerRepository
   end
 
   def find_all_by_first_name(match)
-    customers.select { |customer| customer.first_name.downcase == match.downcase }
+    customers.select do |customer|
+      customer.first_name.downcase == match.downcase
+    end
   end
 
   def find_all_by_last_name(match)
-    customers.select { |customer| customer.last_name.downcase == match.downcase }
+    customers.select do |customer|
+      customer.last_name.downcase == match.downcase
+    end
   end
 
   def inspect
