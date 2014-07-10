@@ -11,14 +11,14 @@ class Item
               :engine,
               :paid_invoice_items
 
-  def initialize(data, item_repo_ref)
+  def initialize(data, engine)
     @id            = data[:id].to_i
     @name          = data[:name]
     @unit_price    = BigDecimal.new(data[:unit_price].to_i) / BigDecimal(100)
     @merchant_id   = data[:merchant_id].to_i
     @created_at    = Date.parse(data[:created_at])
     @updated_at    = Date.parse(data[:updated_at])
-    @engine        = item_repo_ref.engine
+    @engine        = engine
   end
 
   def invoice_items

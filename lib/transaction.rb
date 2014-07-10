@@ -10,7 +10,7 @@ class Transaction
               :updated_at,
               :engine
 
-  def initialize(data, transaction_repo_ref)
+  def initialize(data, engine)
     @id                          = data[:id].to_i
     @invoice_id                  = data[:invoice_id].to_i
     @credit_card_number          = data[:credit_card_number]
@@ -18,7 +18,7 @@ class Transaction
     @result                      = data[:result]
     @created_at                  = Date.parse(data[:created_at])
     @updated_at                  = Date.parse(data[:updated_at])
-    @engine                      = transaction_repo_ref.engine
+    @engine                      = engine
   end
 
   def invoice

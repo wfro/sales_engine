@@ -7,12 +7,12 @@ class Merchant
               :updated_at,
               :engine
 
-  def initialize(data, merchant_repo_ref)
-    @id                = data[:id].to_i
-    @name              = data[:name].to_s
-    @created_at        = Date.parse(data[:created_at])
-    @updated_at        = Date.parse(data[:updated_at])
-    @engine            = merchant_repo_ref.engine
+  def initialize(data, engine)
+    @id           = data[:id].to_i
+    @name         = data[:name].to_s
+    @created_at   = Date.parse(data[:created_at])
+    @updated_at   = Date.parse(data[:updated_at])
+    @engine       = engine
   end
 
   def items

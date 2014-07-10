@@ -2,7 +2,7 @@ require 'csv'
 require_relative 'invoice_item'
 
 class InvoiceItemRepository
-  attr_reader :invoice_items,
+  attr_reader :invoice_items
               :engine
 
   def initialize(filename, engine)
@@ -13,7 +13,7 @@ class InvoiceItemRepository
 
   def from_csv(filename)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    @invoice_items = rows.map { |row| InvoiceItem.new(row, self) }
+    @invoice_items = rows.map { |row| InvoiceItem.new(row, engine) }
   end
 
   def create(items, invoice_id, time)
@@ -28,7 +28,7 @@ class InvoiceItemRepository
       new_invoice_item[:created_at] = time
       new_invoice_item[:updated_at] = time
 
-      all << InvoiceItem.new(new_invoice_item, self)
+      all << InvoiceItem.new(new_invoice_item, engine)
     end
   end
 

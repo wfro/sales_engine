@@ -13,7 +13,7 @@ class InvoiceRepository
 
   def from_csv(filename)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    @invoices = rows.map { |row| Invoice.new(row, self) }
+    @invoices = rows.map { |row| Invoice.new(row, engine) }
   end
 
   def create(invoice_data)
@@ -26,11 +26,13 @@ class InvoiceRepository
     new_invoice[:created_at]  = Time.new.to_s
     new_invoice[:updated_at]  = Time.new.to_s
 
-    engine.invoice_item_repository.create(
-      invoice_data[:items], new_invoice[:id], new_invoice[:created_at]
+    new_invoice_item(
+      invoice_data[:items],
+      new_invoice[:id],
+      new_invoice[:created_at]
     )
 
-    invoice = Invoice.new(new_invoice, self)
+    invoice = Invoice.new(new_invoice, engine)
     all << invoice
     invoice
   end
