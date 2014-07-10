@@ -79,4 +79,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     results = invoice_item_repository.find_all_by_id(1)
     refute_equal results[0].quantity, 9
   end
+
+  def test_it_creates_new_invoice_items
+  end
 end
