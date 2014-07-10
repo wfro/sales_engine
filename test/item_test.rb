@@ -41,6 +41,5 @@ class ItemTest < Minitest::Test
     engine = SalesEngine.new('./data/')
     item = engine.item_repository.find_by_name("Item Accusamus Ut")
     best_day = item.best_day
-    puts best_day
   end
 end
