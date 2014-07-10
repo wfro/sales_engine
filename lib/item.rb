@@ -42,13 +42,16 @@ class Item
       invoice_item.invoice.updated_at
     end
     daily_invoice_items.values.flatten!
+    daily_item_totals = total_items_by_date(daily_invoice_items)
+    daily_item_totals.max_by { |k, v| v }[0]
+  end
 
-    daily_invoice_items.each do |key, value|
-      daily_invoice_items[key] = value.inject(0) do |sum, invoice_item|
+  def total_items_by_date(invoice_items)
+    invoice_items.each do |key, value|
+      invoice_items[key] = value.inject(0) do |sum, invoice_item|
         sum + invoice_item.quantity
       end
     end
-
-    daily_invoice_items.max_by { |k, v| v }[0]
   end
+
 end
