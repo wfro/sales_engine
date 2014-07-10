@@ -60,4 +60,9 @@ class MerchantTest < Minitest::Test
     assert_equal 1, merchant.paid_invoices.length
     refute_equal 2, merchant.paid_invoices.length
   end
+
+  def test_it_finds_customers_with_pending_invoices
+    customers = merchant.customers_with_pending_invoices
+    assert_equal "Joey", customers[0].first_name
+  end
 end
