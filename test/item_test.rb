@@ -1,10 +1,10 @@
 require './test/test_helper'
 
 class ItemTest < Minitest::Test
-  attr_reader :item
+  attr_reader :item, :engine
 
   def setup
-    engine = SalesEngine.new('./data/')
+    @engine = SalesEngine.new('./test/fixtures')
     @item = engine.item_repository.items[0]
   end
 
@@ -38,8 +38,7 @@ class ItemTest < Minitest::Test
   end
 
   def test_it_finds_best_day_for_an_item
-    engine = SalesEngine.new('./data/')
-    item = engine.item_repository.find_by_name("Item Accusamus Ut")
-    best_day = item.best_day
+    date = Date.parse("2012-03-06")
+    assert_equal date, item.best_day
   end
 end

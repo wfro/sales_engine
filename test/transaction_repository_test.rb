@@ -40,7 +40,7 @@ class TransactionRepositoryTest < Minitest::Test
     result = transaction_repository.find_all_by_id(1)
     assert_equal '4654405418249632', result[0].credit_card_number
   end
-  
+
   def test_finds_all_by_invoice_id
     result = transaction_repository.find_all_by_invoice_id(1)
     assert_equal '4654405418249632', result[0].credit_card_number
@@ -54,5 +54,19 @@ class TransactionRepositoryTest < Minitest::Test
   def test_finds_all_by_result
     result = transaction_repository.find_all_by_result('success')
     assert_equal 1, result[0].id
+  end
+
+  def test_create_adds_transaction_objects_to_the_collection
+    transactions = transaction_repository.all
+    previous_length = transactions.length
+
+    transaction_repository.create(
+      credit_card_number: '1111222233334444',
+      credit_card_expiration_date: "10/14",
+      result: "success",
+      invoice_id: 100
+    )
+
+    assert_equal previous_length + 1, transactions.length
   end
 end

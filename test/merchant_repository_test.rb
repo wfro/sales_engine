@@ -47,4 +47,9 @@ class MerchantRepositoryTest < Minitest::Test
     results = merchant_repository.find_all_by_name('Schroeder-Jerde')
     refute_equal 2, results[0].id
   end
+
+  def test_it_finds_revenue_for_all_merchants_by_date
+    date = Date.parse("25 Mar 2012")
+    assert_equal BigDecimal("21067.77"), merchant_repository.revenue(date)
+  end
 end

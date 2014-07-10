@@ -39,8 +39,9 @@ class Invoice
   end
 
   def amount
-    invoice_items.inject(0) { |result, invoice_item| result +
-      (BigDecimal(invoice_item.quantity) * invoice_item.unit_price) }
+    invoice_items.inject(0) do |result, invoice_item|
+      result + (BigDecimal(invoice_item.quantity) * invoice_item.unit_price)
+    end
   end
 
   def customer

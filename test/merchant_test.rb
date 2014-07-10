@@ -12,20 +12,20 @@ class MerchantTest < Minitest::Test
     assert_equal 1, @merchant.id
     assert_equal "Schroeder-Jerde", @merchant.name
   end
-  
+
   def test_dates_are_converted_to_Date_objects
     assert merchant.created_at
     assert merchant.updated_at
     assert_equal Date, merchant.created_at.class
     assert_equal Date, merchant.updated_at.class
   end
-  
+
   def test_it_finds_items_for_a_merchant
     assert merchant.respond_to? :items
     assert merchant.items
     assert merchant.items.length >= 11
   end
-  
+
   def test_it_finds_invoices_for_a_merchant
     assert merchant.respond_to? :invoices
     assert merchant.invoices
@@ -59,5 +59,10 @@ class MerchantTest < Minitest::Test
 
     assert_equal 1, merchant.paid_invoices.length
     refute_equal 2, merchant.paid_invoices.length
+  end
+
+  def test_it_finds_customers_with_pending_invoices
+    customers = merchant.customers_with_pending_invoices
+    assert_equal "Joey", customers[0].first_name
   end
 end

@@ -1,10 +1,10 @@
 require './test/test_helper'
 
 class InvoiceItemRepositoryTest < Minitest::Test
-  attr_reader :invoice_item_repository
+  attr_reader :invoice_item_repository, :engine
 
   def setup
-    engine = SalesEngine.new('./test/fixtures')
+    @engine = SalesEngine.new('./test/fixtures')
     @invoice_item_repository = engine.invoice_item_repository
   end
 
@@ -81,5 +81,10 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_it_creates_new_invoice_items
+    previous_length = invoice_item_repository.all.length
+    items = (1..3).map { engine.item_repository.random }
+    invoice_item_repository.create(items, 1, "20 Dec 1986")
+
+    assert_equal previous_length + 3, invoice_item_repository.all.length
   end
 end
