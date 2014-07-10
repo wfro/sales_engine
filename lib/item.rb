@@ -38,16 +38,17 @@ class Item
   end
 
   def best_day
-    daily_invoice_items = paid_invoice_items.group_by do
-      |invoice_item| invoice_item.invoice.updated_at
+    daily_invoice_items = paid_invoice_items.group_by do |invoice_item|
+      invoice_item.invoice.updated_at
     end
     daily_invoice_items.values.flatten!
+
     daily_invoice_items.each do |key, value|
-      daily_invoice_items[key] = value.inject(0) do
-        |sum, invoice_item| sum + invoice_item.quantity
+      daily_invoice_items[key] = value.inject(0) do |sum, invoice_item|
+        sum + invoice_item.quantity
       end
     end
-    best_day = daily_invoice_items.max_by { |k, v| v }
-    best_day[0]
+
+    daily_invoice_items.max_by { |k, v| v }[0]
   end
 end
