@@ -80,19 +80,6 @@ class InvoiceItemRepositoryTest < Minitest::Test
     refute_equal results[0].quantity, 9
   end
 
-  def test_it_creates_new_invoices
-      customer = engine.customer_repository.find_by_id(1)
-      merchant = engine.merchant_repository.find_by_id(2)
-      items    = (1..3).map { engine.item_repository.random }
-
-      invoice = engine.invoice_repository.create(customer: customer, merchant: merchant, items: items)
-
-      
-      items.map(&:name).each do |name|
-        invoice.items.map(&:name).should include(name)
-      end
-
-      invoice.merchant_id.should == merchant.id
-      invoice.customer.id.should == customer.id
+  def test_it_creates_new_invoice_items
   end
 end
