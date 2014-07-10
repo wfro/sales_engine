@@ -46,7 +46,7 @@ class Merchant
       by_date = paid_invoices.select { |invoice| invoice.updated_at == date }
       by_date.inject(0) { |result, invoice| result + invoice.amount }
     else
-      paid_invoices.inject(0) { |result, invoice| result + invoice.amount}
+      paid_invoices.inject(0) { |result, invoice| result + invoice.amount }
     end
   end
 
