@@ -42,11 +42,11 @@ class MerchantRepository
   end
 
   def most_revenue(x)
-    merchants.sort_by { |m| m.revenue }.reverse[0..x-1]
+    merchants.sort_by { |m| m.revenue }.reverse[0...x]
   end
 
   def most_items(x=1)
-    merchants.sort_by { |m| m.sold_items }.reverse[0..x-1]
+    merchants.sort_by { |m| m.sold_items }.reverse[0...x]
   end
 
   def revenue(date)
