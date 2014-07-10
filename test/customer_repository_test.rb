@@ -45,4 +45,19 @@ class CustomerRepositoryTest < Minitest::Test
     result = customer_repository.find_all_by_last_name('Ondricka')
     assert_equal 1, result[0].id
   end
+
+  def test_it_finds_customer_who_purchased_most_items
+    assert customer_repository.respond_to? :most_items
+    assert customer_repository.most_items
+    assert customer_repository.most_items.class == Customer
+    assert_equal 'Ondricka', customer_repository.most_items.last_name
+  end
+
+
+  def test_it_finds_most_valuable_customer
+    assert customer_repository.respond_to? :most_revenue
+    assert customer_repository.most_revenue
+    assert_equal Customer, customer_repository.most_revenue.class
+    assert_equal 'Ondricka', customer_repository.most_revenue.last_name
+  end
 end

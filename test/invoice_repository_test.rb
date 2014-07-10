@@ -68,4 +68,11 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal invoice.merchant_id, merchant.id
     assert_equal invoice.customer.id, customer.id
   end
+
+  def test_pending_returns_an_array_of_unsuccessful_transactions
+    assert invoice_repository.pending
+    assert Array, invoice_repository.pending.class
+    assert Invoice, invoice_repository.pending.first.class
+    assert invoice_repository.pending.length >= 3
+  end
 end

@@ -38,4 +38,12 @@ class CustomerTest < Minitest::Test
     assert_equal Merchant, customer.favorite_merchant.class
     assert_equal "Balistreri, Schaefer and Kshlerin", customer.favorite_merchant.name
   end
+
+  def test_it_retrieves_pending_invoices
+    assert customer.respond_to? :pending_invoices
+    assert customer.pending_invoices
+    assert_equal Array, customer.pending_invoices.class
+    assert_equal Invoice, customer.pending_invoices.first.class
+    assert_equal 78, customer.pending_invoices.first.merchant_id
+  end
 end
