@@ -30,6 +30,6 @@ class Transaction
   end
 
   def successful?
-    true if result == 'success'
+    result == 'success'
   end
 end
