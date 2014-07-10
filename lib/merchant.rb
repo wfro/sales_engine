@@ -50,10 +50,6 @@ class Merchant
     invoices.inject(0) { |result, invoice| result + invoice.amount }
   end
 
-  def total_revenue(invoices)
-
-  end
-
   def sold_items
     paid_invoice_items.inject(0) { |sum, item| sum += item.quantity }
   end
