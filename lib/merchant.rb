@@ -43,11 +43,11 @@ class Merchant
 
   def revenue(date=nil)
     if date
-      by_date = paid_invoices.select { |invoice| invoice.updated_at == date }
-      by_date.inject(0) { |result, invoice| result + invoice.amount }
+      invoices = paid_invoices.select { |invoice| invoice.updated_at == date }
     else
-      paid_invoices.inject(0) { |result, invoice| result + invoice.amount }
+      invoices = paid_invoices
     end
+    invoices.inject(0) { |result, invoice| result + invoice.amount }
   end
 
   def sold_items
